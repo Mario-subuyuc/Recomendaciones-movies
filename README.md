@@ -1,3 +1,7 @@
+# ProyectIA
+
+Consulta [la guía de estructura en español](ESTRUCTURA.md) para saber dónde editar cada módulo y qué significan los nombres técnicos de Laravel.
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
@@ -17,13 +21,13 @@ Rutas: `/dashboard/peliculas` y `/dashboard/videojuegos`. En ambos módulos: `GE
 
 Administrador tiene todos los permisos. Empleado puede ver, crear y editar ambos catálogos. Cliente puede ver ambos. Los permisos individuales asignados desde Usuarios se suman a los del rol; se validan en cada ruta y los botones se muestran según el acceso. Los permisos se llaman `peliculas.ver/crear/editar/eliminar` y `videojuegos.ver/crear/editar/eliminar`.
 
-Los modelos son `Pelicula` y `Videojuego`, cada módulo tiene su controlador, y comparten `CatalogController`, `SaveCatalogRequest` y las vistas de `resources/views/catalog` para reducir duplicación. Los datos ficticios están en `database/seeders/CatalogSeeder.php`.
+Los modelos son `Pelicula` y `Videojuego`, cada módulo tiene su controlador, y comparten `CatalogoController`, `GuardarCatalogoRequest` y las vistas de `resources/views/catalogo` para reducir duplicación. Los datos ficticios están en `database/seeders/CatalogoSeeder.php`.
 
 ### Interfaz Mazer
 
 El dashboard y el CRUD usan Mazer (Bootstrap 5), con un menú lateral adaptable y un botón para alternar modo claro/oscuro. La preferencia se guarda en `localStorage`; la primera visita respeta el tema del sistema. Los estilos de Mazer se cargan desde el CDN oficial indicado por el proyecto y requieren conexión a Internet. El perfil también usa Mazer, incluidos sus formularios y la confirmación de eliminación. Las pantallas de autenticación conservan Breeze. El menú lateral funciona como acordeón: al abrir una sección se cierran las otras, y la sección de la ruta actual comienza abierta.
 
-Para agregar módulos, usar `<x-dashboard-layout>` con un slot `header` y el contenido de la página. Este componente centraliza el tema, la navegación y los mensajes de éxito y validación. El menú está en `resources/views/layouts/partials/dashboard-sidebar.blade.php`; los campos reutilizables están en `<x-dashboard-input>`. No mezclar clases Tailwind con este layout: usar clases Bootstrap. Hay slots de extensión `@stack('styles')` y `@stack('scripts')`.
+Para agregar módulos, usar `<x-plantilla-panel>` con un slot `header` y el contenido de la página. Este componente centraliza el tema, la navegación y los mensajes de éxito y validación. El menú está en `resources/views/plantillas/parciales/menu-lateral.blade.php`; los campos reutilizables están en `<x-campo-panel>`. No mezclar clases Tailwind con este layout: usar clases Bootstrap. Hay slots de extensión `@stack('styles')` y `@stack('scripts')`.
 
 Preparar la base de datos local:
 
@@ -56,7 +60,7 @@ El Administrador encontrará el enlace **Administrar usuarios** en `/dashboard` 
 
 Todas las rutas del CRUD requieren autenticación y el rol `Administrador`. Empleados y clientes reciben HTTP 403 aunque tengan permisos individuales de usuarios. El administrador puede seleccionar varios roles y permisos adicionales existentes. Los permisos adicionales se suman a los heredados; desmarcarlos no revoca permisos del rol. Al editar, dejar la contraseña vacía conserva la actual. Desde este módulo no se permite eliminar la propia cuenta ni quitarse el rol Administrador.
 
-La validación está en `app/Http/Requests/Admin/SaveUserRequest.php`, el controlador en `app/Http/Controllers/Admin/UserController.php` y las vistas en `resources/views/admin/users`. Las escrituras de usuarios y sus asignaciones se ejecutan en transacciones. Para futuros módulos, agregar sus controladores y rutas y definir permisos `modulo.accion` en el seeder; el formulario agrupa automáticamente los permisos por módulo. Los alias `role` y `permission` están registrados en `bootstrap/app.php` para proteger futuras rutas. El registro público de Breeze sigue sin asignar roles automáticamente.
+La validación está en `app/Http/Requests/Admin/GuardarUsuarioRequest.php`, el controlador en `app/Http/Controllers/Admin/UsuarioController.php` y las vistas en `resources/views/administracion/usuarios`. Las escrituras de usuarios y sus asignaciones se ejecutan en transacciones. Para futuros módulos, agregar sus controladores y rutas y definir permisos `modulo.accion` en el seeder; el formulario agrupa automáticamente los permisos por módulo. Los alias `role` y `permission` están registrados en `bootstrap/app.php` para proteger futuras rutas. El registro público de Breeze sigue sin asignar roles automáticamente.
 
 Verificar:
 

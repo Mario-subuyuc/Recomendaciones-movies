@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Videojuego;
 
-class VideojuegoController extends CatalogController
+class VideojuegoController extends CatalogoController
 {
     protected string $model = Videojuego::class;
 

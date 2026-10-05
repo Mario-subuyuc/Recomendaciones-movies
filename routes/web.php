@@ -1,23 +1,23 @@
 <?php
 
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\PeliculaController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\VideojuegoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('bienvenida');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    return view('panel');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [PerfilController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [PerfilController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [PerfilController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__.'/auth.php';
@@ -35,6 +35,6 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
 });
 
 Route::prefix('dashboard')->name('admin.')->middleware(['auth', 'role:Administrador'])->group(function () {
-    Route::resource('usuarios', UserController::class)
+    Route::resource('usuarios', UsuarioController::class)
         ->parameters(['usuarios' => 'user'])->except('show');
 });

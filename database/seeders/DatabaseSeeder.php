@@ -132,7 +132,7 @@ class DatabaseSeeder extends Seeder
             'Administrador',
         ]);
 
-        $this->call(CatalogSeeder::class);
+        $this->call(CatalogoSeeder::class);
 
         foreach ([
             ['name' => 'laureano', 'email' => 'msubuyuct@miumg.edu.gt', 'role' => 'Empleado'],

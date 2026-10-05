@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Pelicula;
 
-class PeliculaController extends CatalogController
+class PeliculaController extends CatalogoController
 {
     protected string $model = Pelicula::class;
 
