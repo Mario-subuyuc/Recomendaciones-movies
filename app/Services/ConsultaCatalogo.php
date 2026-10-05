@@ -14,7 +14,7 @@ class ConsultaCatalogo
     {
         return $categoria === 'peliculas'
             ? ['titulo' => 'texto', 'genero' => 'texto', 'plataforma' => 'texto', 'anio_lanzamiento' => 'entero', 'calificacion' => 'decimal', 'director' => 'texto', 'actores' => 'texto', 'productora' => 'texto', 'duracion_minutos' => 'entero', 'clasificacion' => 'texto', 'fecha_registro' => 'fecha']
-            : ['titulo' => 'texto', 'genero' => 'texto', 'plataforma' => 'texto', 'anio_lanzamiento' => 'entero', 'calificacion' => 'decimal', 'desarrollador' => 'texto', 'jugadores' => 'entero', 'fecha_registro' => 'fecha'];
+            : ['titulo' => 'texto', 'genero' => 'texto', 'plataforma' => 'texto', 'anio_lanzamiento' => 'entero', 'calificacion' => 'decimal', 'desarrollador' => 'texto', 'jugadores' => 'texto', 'fecha_registro' => 'fecha'];
     }
 
     public function comprobarCategoria(string $pregunta, string $categoria): void

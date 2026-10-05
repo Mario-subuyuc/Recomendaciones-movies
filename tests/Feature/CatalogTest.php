@@ -6,6 +6,7 @@ use App\Models\Pelicula;
 use App\Models\User;
 use App\Models\Videojuego;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class CatalogTest extends TestCase
@@ -18,7 +19,7 @@ class CatalogTest extends TestCase
         $this->actingAs(User::where('email', 'mariosubuyucfb@gmail.com')->first());
         foreach (['peliculas' => Pelicula::class, 'videojuegos' => Videojuego::class] as $module => $model) {
             $record = $model::first();
-            $this->assertSame(12, $model::count());
+            $this->assertSame($module === 'peliculas' ? 50 : 69, $model::count());
             $this->get('/dashboard/'.$module)->assertOk();
             $this->get('/dashboard/'.$module.'/create')->assertOk();
             $this->get('/dashboard/'.$module.'/'.$record->getKey())->assertOk();
@@ -58,7 +59,7 @@ class CatalogTest extends TestCase
             $this->delete($url.'/'.$record->getKey())->assertForbidden();
             $client->givePermissionTo($module.'.crear');
             $this->get($url.'/create')->assertForbidden();
-            $role = \Spatie\Permission\Models\Role::create(['name' => 'Crear '.$module, 'guard_name' => 'web']);
+            $role = Role::create(['name' => 'Crear '.$module, 'guard_name' => 'web']);
             $role->syncPermissions([$module.'.ver', $module.'.crear']);
             $client->syncRoles($role);
             $this->get($url.'/create')->assertOk();

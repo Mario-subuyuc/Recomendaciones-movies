@@ -23,6 +23,6 @@ class Videojuego extends Model
 
     protected function casts(): array
     {
-        return ['anio_lanzamiento' => 'integer', 'calificacion' => 'decimal:1', 'fecha_registro' => 'date', 'jugadores' => 'integer'];
+        return ['anio_lanzamiento' => 'integer', 'calificacion' => 'decimal:1', 'fecha_registro' => 'date', 'jugadores' => 'string'];
     }
 }

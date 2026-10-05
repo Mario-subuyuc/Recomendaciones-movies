@@ -1,0 +1,623 @@
+[
+    {
+        "titulo": "Minecraft",
+        "genero": "Sandbox",
+        "plataforma": "PC, PlayStation, Xbox, Switch, Móvil",
+        "anio_lanzamiento": 2011,
+        "calificacion": 9,
+        "desarrollador": "Mojang Studios",
+        "jugadores": "1-8+"
+    },
+    {
+        "titulo": "Grand Theft Auto V",
+        "genero": "Acción \/ Mundo abierto",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2013,
+        "calificacion": 9.5,
+        "desarrollador": "Rockstar North",
+        "jugadores": "1-30"
+    },
+    {
+        "titulo": "Red Dead Redemption 2",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2018,
+        "calificacion": 9.8,
+        "desarrollador": "Rockstar Studios",
+        "jugadores": "1-32"
+    },
+    {
+        "titulo": "The Last of Us",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PlayStation, PC",
+        "anio_lanzamiento": 2013,
+        "calificacion": 9.5,
+        "desarrollador": "Naughty Dog",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "The Last of Us Part II",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PlayStation",
+        "anio_lanzamiento": 2020,
+        "calificacion": 9.2,
+        "desarrollador": "Naughty Dog",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "The Legend of Zelda: Breath of the Wild",
+        "genero": "Aventura \/ Acción",
+        "plataforma": "Nintendo Switch, Wii U",
+        "anio_lanzamiento": 2017,
+        "calificacion": 9.7,
+        "desarrollador": "Nintendo",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "The Legend of Zelda: Tears of the Kingdom",
+        "genero": "Aventura \/ Acción",
+        "plataforma": "Nintendo Switch",
+        "anio_lanzamiento": 2023,
+        "calificacion": 9.6,
+        "desarrollador": "Nintendo",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Super Mario Odyssey",
+        "genero": "Plataformas \/ Aventura",
+        "plataforma": "Nintendo Switch",
+        "anio_lanzamiento": 2017,
+        "calificacion": 9.5,
+        "desarrollador": "Nintendo",
+        "jugadores": "1-2"
+    },
+    {
+        "titulo": "Mario Kart 8 Deluxe",
+        "genero": "Carreras",
+        "plataforma": "Nintendo Switch",
+        "anio_lanzamiento": 2017,
+        "calificacion": 9.2,
+        "desarrollador": "Nintendo",
+        "jugadores": "1-12"
+    },
+    {
+        "titulo": "Super Smash Bros. Ultimate",
+        "genero": "Lucha",
+        "plataforma": "Nintendo Switch",
+        "anio_lanzamiento": 2018,
+        "calificacion": 9.3,
+        "desarrollador": "Bandai Namco Studios \/ Sora Ltd.",
+        "jugadores": "1-8"
+    },
+    {
+        "titulo": "Pokémon Rojo y Azul",
+        "genero": "RPG",
+        "plataforma": "Game Boy",
+        "anio_lanzamiento": 1996,
+        "calificacion": 9,
+        "desarrollador": "Game Freak",
+        "jugadores": "1-2"
+    },
+    {
+        "titulo": "Pokémon Escarlata y Violeta",
+        "genero": "RPG",
+        "plataforma": "Nintendo Switch",
+        "anio_lanzamiento": 2022,
+        "calificacion": 8,
+        "desarrollador": "Game Freak",
+        "jugadores": "1-4"
+    },
+    {
+        "titulo": "Fortnite",
+        "genero": "Battle Royale \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox, Switch, Móvil",
+        "anio_lanzamiento": 2017,
+        "calificacion": 8.5,
+        "desarrollador": "Epic Games",
+        "jugadores": "1-100"
+    },
+    {
+        "titulo": "Call of Duty: Warzone",
+        "genero": "Battle Royale \/ Shooter",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2020,
+        "calificacion": 8.2,
+        "desarrollador": "Infinity Ward \/ Raven Software",
+        "jugadores": "1-150"
+    },
+    {
+        "titulo": "Call of Duty: Modern Warfare",
+        "genero": "Shooter",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2019,
+        "calificacion": 8.5,
+        "desarrollador": "Infinity Ward",
+        "jugadores": "1-64"
+    },
+    {
+        "titulo": "Counter-Strike 2",
+        "genero": "Shooter táctico",
+        "plataforma": "PC",
+        "anio_lanzamiento": 2023,
+        "calificacion": 8.5,
+        "desarrollador": "Valve",
+        "jugadores": "1-10"
+    },
+    {
+        "titulo": "League of Legends",
+        "genero": "MOBA",
+        "plataforma": "PC",
+        "anio_lanzamiento": 2009,
+        "calificacion": 9,
+        "desarrollador": "Riot Games",
+        "jugadores": "1-10"
+    },
+    {
+        "titulo": "Dota 2",
+        "genero": "MOBA",
+        "plataforma": "PC",
+        "anio_lanzamiento": 2013,
+        "calificacion": 9,
+        "desarrollador": "Valve",
+        "jugadores": "1-10"
+    },
+    {
+        "titulo": "Valorant",
+        "genero": "Shooter táctico",
+        "plataforma": "PC",
+        "anio_lanzamiento": 2020,
+        "calificacion": 8.5,
+        "desarrollador": "Riot Games",
+        "jugadores": "1-10"
+    },
+    {
+        "titulo": "Overwatch 2",
+        "genero": "Shooter \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox, Switch",
+        "anio_lanzamiento": 2022,
+        "calificacion": 8,
+        "desarrollador": "Blizzard Entertainment",
+        "jugadores": "1-10"
+    },
+    {
+        "titulo": "Elden Ring",
+        "genero": "RPG \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2022,
+        "calificacion": 9.6,
+        "desarrollador": "FromSoftware",
+        "jugadores": "1-4"
+    },
+    {
+        "titulo": "Dark Souls",
+        "genero": "RPG \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2011,
+        "calificacion": 9,
+        "desarrollador": "FromSoftware",
+        "jugadores": "1-4"
+    },
+    {
+        "titulo": "Bloodborne",
+        "genero": "RPG \/ Acción",
+        "plataforma": "PlayStation",
+        "anio_lanzamiento": 2015,
+        "calificacion": 9.5,
+        "desarrollador": "FromSoftware",
+        "jugadores": "1-5"
+    },
+    {
+        "titulo": "Sekiro: Shadows Die Twice",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2019,
+        "calificacion": 9.5,
+        "desarrollador": "FromSoftware",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Cyberpunk 2077",
+        "genero": "RPG \/ Mundo abierto",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2020,
+        "calificacion": 8.5,
+        "desarrollador": "CD Projekt Red",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "The Witcher 3: Wild Hunt",
+        "genero": "RPG \/ Mundo abierto",
+        "plataforma": "PC, PlayStation, Xbox, Switch",
+        "anio_lanzamiento": 2015,
+        "calificacion": 9.8,
+        "desarrollador": "CD Projekt Red",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Baldur’s Gate 3",
+        "genero": "RPG",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2023,
+        "calificacion": 9.7,
+        "desarrollador": "Larian Studios",
+        "jugadores": "1-4"
+    },
+    {
+        "titulo": "God of War",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PlayStation, PC",
+        "anio_lanzamiento": 2018,
+        "calificacion": 9.5,
+        "desarrollador": "Santa Monica Studio",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "God of War Ragnarök",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PlayStation, PC",
+        "anio_lanzamiento": 2022,
+        "calificacion": 9.5,
+        "desarrollador": "Santa Monica Studio",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Horizon Zero Dawn",
+        "genero": "RPG \/ Acción",
+        "plataforma": "PlayStation, PC",
+        "anio_lanzamiento": 2017,
+        "calificacion": 9,
+        "desarrollador": "Guerrilla Games",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Horizon Forbidden West",
+        "genero": "RPG \/ Acción",
+        "plataforma": "PlayStation, PC",
+        "anio_lanzamiento": 2022,
+        "calificacion": 9,
+        "desarrollador": "Guerrilla Games",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Assassin’s Creed II",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2009,
+        "calificacion": 9,
+        "desarrollador": "Ubisoft Montreal",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Assassin’s Creed Valhalla",
+        "genero": "RPG \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2020,
+        "calificacion": 8.5,
+        "desarrollador": "Ubisoft Montreal",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Resident Evil 4",
+        "genero": "Survival Horror \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2005,
+        "calificacion": 9.5,
+        "desarrollador": "Capcom",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Resident Evil 2",
+        "genero": "Survival Horror",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2019,
+        "calificacion": 9.2,
+        "desarrollador": "Capcom",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Silent Hill 2",
+        "genero": "Survival Horror",
+        "plataforma": "PC, PlayStation",
+        "anio_lanzamiento": 2001,
+        "calificacion": 9.2,
+        "desarrollador": "Konami",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Final Fantasy VII",
+        "genero": "RPG",
+        "plataforma": "PlayStation, PC, Switch",
+        "anio_lanzamiento": 1997,
+        "calificacion": 9.5,
+        "desarrollador": "Square",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Final Fantasy VII Rebirth",
+        "genero": "RPG \/ Acción",
+        "plataforma": "PlayStation",
+        "anio_lanzamiento": 2024,
+        "calificacion": 9,
+        "desarrollador": "Square Enix",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Halo: Combat Evolved",
+        "genero": "Shooter",
+        "plataforma": "Xbox, PC",
+        "anio_lanzamiento": 2001,
+        "calificacion": 9.5,
+        "desarrollador": "Bungie",
+        "jugadores": "1-16"
+    },
+    {
+        "titulo": "Halo Infinite",
+        "genero": "Shooter",
+        "plataforma": "PC, Xbox",
+        "anio_lanzamiento": 2021,
+        "calificacion": 8.5,
+        "desarrollador": "343 Industries",
+        "jugadores": "1-24"
+    },
+    {
+        "titulo": "Super Mario Bros.",
+        "genero": "Plataformas",
+        "plataforma": "NES",
+        "anio_lanzamiento": 1985,
+        "calificacion": 9,
+        "desarrollador": "Nintendo",
+        "jugadores": "1-2"
+    },
+    {
+        "titulo": "Sonic the Hedgehog",
+        "genero": "Plataformas",
+        "plataforma": "Mega Drive \/ Genesis",
+        "anio_lanzamiento": 1991,
+        "calificacion": 9,
+        "desarrollador": "Sonic Team",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Terraria",
+        "genero": "Sandbox \/ Aventura",
+        "plataforma": "PC, Consolas, Móvil",
+        "anio_lanzamiento": 2011,
+        "calificacion": 9,
+        "desarrollador": "Re-Logic",
+        "jugadores": "1-8"
+    },
+    {
+        "titulo": "Among Us",
+        "genero": "Multijugador \/ Deducción",
+        "plataforma": "PC, Móvil, Consolas",
+        "anio_lanzamiento": 2018,
+        "calificacion": 8,
+        "desarrollador": "Innersloth",
+        "jugadores": "4-15"
+    },
+    {
+        "titulo": "Roblox",
+        "genero": "Plataforma \/ Sandbox",
+        "plataforma": "PC, Móvil, Consolas",
+        "anio_lanzamiento": 2006,
+        "calificacion": 8,
+        "desarrollador": "Roblox Corporation",
+        "jugadores": "1+"
+    },
+    {
+        "titulo": "Free Fire",
+        "genero": "Battle Royale",
+        "plataforma": "Móvil",
+        "anio_lanzamiento": 2017,
+        "calificacion": 8,
+        "desarrollador": "Garena",
+        "jugadores": "1-50"
+    },
+    {
+        "titulo": "Candy Crush Saga",
+        "genero": "Puzzle",
+        "plataforma": "Móvil, Web",
+        "anio_lanzamiento": 2012,
+        "calificacion": 8,
+        "desarrollador": "King",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Clash of Clans",
+        "genero": "Estrategia",
+        "plataforma": "Móvil",
+        "anio_lanzamiento": 2012,
+        "calificacion": 8.5,
+        "desarrollador": "Supercell",
+        "jugadores": "1+"
+    },
+    {
+        "titulo": "League of Legends: Wild Rift",
+        "genero": "MOBA",
+        "plataforma": "Móvil",
+        "anio_lanzamiento": 2020,
+        "calificacion": 8.5,
+        "desarrollador": "Riot Games",
+        "jugadores": "1-10"
+    },
+    {
+        "titulo": "It Takes Two",
+        "genero": "Aventura \/ Plataformas",
+        "plataforma": "PC, PlayStation, Xbox, Switch",
+        "anio_lanzamiento": 2021,
+        "calificacion": 9,
+        "desarrollador": "Hazelight Studios",
+        "jugadores": "2"
+    },
+    {
+        "titulo": "Animal Crossing: New Horizons",
+        "genero": "Simulación \/ Sandbox",
+        "plataforma": "Nintendo Switch",
+        "anio_lanzamiento": 2020,
+        "calificacion": 8.5,
+        "desarrollador": "Nintendo",
+        "jugadores": "1-8"
+    },
+    {
+        "titulo": "Hogwarts Legacy",
+        "genero": "RPG \/ Aventura",
+        "plataforma": "PC, PlayStation, Xbox, Switch",
+        "anio_lanzamiento": 2023,
+        "calificacion": 8.5,
+        "desarrollador": "Avalanche Software",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Marvel's Spider-Man: Miles Morales",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PlayStation, PC",
+        "anio_lanzamiento": 2020,
+        "calificacion": 8.5,
+        "desarrollador": "Insomniac Games",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Marvel's Spider-Man 2",
+        "genero": "Acción \/ Aventura",
+        "plataforma": "PlayStation, PC",
+        "anio_lanzamiento": 2023,
+        "calificacion": 9,
+        "desarrollador": "Insomniac Games",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Forza Horizon 5",
+        "genero": "Carreras \/ Mundo abierto",
+        "plataforma": "PC, Xbox",
+        "anio_lanzamiento": 2021,
+        "calificacion": 9,
+        "desarrollador": "Playground Games",
+        "jugadores": "1-12"
+    },
+    {
+        "titulo": "Resident Evil Village",
+        "genero": "Survival Horror \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2021,
+        "calificacion": 8.5,
+        "desarrollador": "Capcom",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Dead Space",
+        "genero": "Survival Horror \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2023,
+        "calificacion": 8.5,
+        "desarrollador": "Motive Studio",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Street Fighter 6",
+        "genero": "Lucha",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2023,
+        "calificacion": 8.8,
+        "desarrollador": "Capcom",
+        "jugadores": "1-2"
+    },
+    {
+        "titulo": "Tekken 8",
+        "genero": "Lucha",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2024,
+        "calificacion": 8.5,
+        "desarrollador": "Bandai Namco Studios",
+        "jugadores": "1-2"
+    },
+    {
+        "titulo": "Mortal Kombat 1",
+        "genero": "Lucha",
+        "plataforma": "PC, PlayStation, Xbox, Switch",
+        "anio_lanzamiento": 2023,
+        "calificacion": 8,
+        "desarrollador": "NetherRealm Studios",
+        "jugadores": "1-2"
+    },
+    {
+        "titulo": "Dragon Ball: Sparking! ZERO",
+        "genero": "Lucha \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2024,
+        "calificacion": 8.5,
+        "desarrollador": "Spike Chunsoft",
+        "jugadores": "1-2"
+    },
+    {
+        "titulo": "Black Myth: Wukong",
+        "genero": "RPG \/ Acción",
+        "plataforma": "PC, PlayStation",
+        "anio_lanzamiento": 2024,
+        "calificacion": 8.5,
+        "desarrollador": "Game Science",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Palworld",
+        "genero": "Supervivencia \/ Acción",
+        "plataforma": "PC, Xbox",
+        "anio_lanzamiento": 2024,
+        "calificacion": 8,
+        "desarrollador": "Pocketpair",
+        "jugadores": "1-32"
+    },
+    {
+        "titulo": "Helldivers 2",
+        "genero": "Shooter \/ Acción",
+        "plataforma": "PC, PlayStation",
+        "anio_lanzamiento": 2024,
+        "calificacion": 8.5,
+        "desarrollador": "Arrowhead Game Studios",
+        "jugadores": "1-4"
+    },
+    {
+        "titulo": "Astro Bot",
+        "genero": "Plataformas \/ Aventura",
+        "plataforma": "PlayStation 5",
+        "anio_lanzamiento": 2024,
+        "calificacion": 9,
+        "desarrollador": "Team Asobi",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "Metaphor: ReFantazio",
+        "genero": "RPG",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2024,
+        "calificacion": 9,
+        "desarrollador": "Studio Zero",
+        "jugadores": "1"
+    },
+    {
+        "titulo": "EA Sports FC 24",
+        "genero": "Deportes \/ Fútbol",
+        "plataforma": "PC, PlayStation, Xbox, Switch",
+        "anio_lanzamiento": 2023,
+        "calificacion": 8,
+        "desarrollador": "EA Vancouver",
+        "jugadores": "1-22"
+    },
+    {
+        "titulo": "EA Sports FC 25",
+        "genero": "Deportes \/ Fútbol",
+        "plataforma": "PC, PlayStation, Xbox, Switch",
+        "anio_lanzamiento": 2024,
+        "calificacion": 7.8,
+        "desarrollador": "EA Canada",
+        "jugadores": "1-22"
+    },
+    {
+        "titulo": "Marvel Rivals",
+        "genero": "Shooter \/ Acción",
+        "plataforma": "PC, PlayStation, Xbox",
+        "anio_lanzamiento": 2024,
+        "calificacion": 8,
+        "desarrollador": "NetEase Games",
+        "jugadores": "1-12"
+    }
+]

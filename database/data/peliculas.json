@@ -1,0 +1,452 @@
+[
+    {
+        "titulo": "El Padrino",
+        "anio_lanzamiento": 1972,
+        "genero": "Crimen, Drama",
+        "director": "Francis Ford Coppola",
+        "actores": "Marlon Brando, Al Pacino, James Caan",
+        "duracion_minutos": 175,
+        "calificacion": 9.2
+    },
+    {
+        "titulo": "El Padrino II",
+        "anio_lanzamiento": 1974,
+        "genero": "Crimen, Drama",
+        "director": "Francis Ford Coppola",
+        "actores": "Al Pacino, Robert De Niro, Robert Duvall",
+        "duracion_minutos": 202,
+        "calificacion": 9
+    },
+    {
+        "titulo": "El caballero de la noche",
+        "anio_lanzamiento": 2008,
+        "genero": "Acción, Crimen, Drama",
+        "director": "Christopher Nolan",
+        "actores": "Christian Bale, Heath Ledger, Aaron Eckhart, Michael Caine",
+        "duracion_minutos": 152,
+        "calificacion": 9.1
+    },
+    {
+        "titulo": "Interestelar",
+        "anio_lanzamiento": 2014,
+        "genero": "Ciencia ficción, Drama",
+        "director": "Christopher Nolan",
+        "actores": "Matthew McConaughey, Anne Hathaway, Jessica Chastain",
+        "duracion_minutos": 169,
+        "calificacion": 8.7
+    },
+    {
+        "titulo": "Inception: El origen",
+        "anio_lanzamiento": 2010,
+        "genero": "Ciencia ficción, Acción, Suspenso",
+        "director": "Christopher Nolan",
+        "actores": "Leonardo DiCaprio, Joseph Gordon-Levitt, Tom Hardy, Ellen Page",
+        "duracion_minutos": 148,
+        "calificacion": 8.8
+    },
+    {
+        "titulo": "Matrix",
+        "anio_lanzamiento": 1999,
+        "genero": "Ciencia ficción, Acción",
+        "director": "Lana Wachowski, Lilly Wachowski",
+        "actores": "Keanu Reeves, Laurence Fishburne, Carrie-Anne Moss",
+        "duracion_minutos": 136,
+        "calificacion": 8.7
+    },
+    {
+        "titulo": "El señor de los anillos: La comunidad del anillo",
+        "anio_lanzamiento": 2001,
+        "genero": "Fantasía, Aventura",
+        "director": "Peter Jackson",
+        "actores": "Elijah Wood, Ian McKellen, Viggo Mortensen, Orlando Bloom",
+        "duracion_minutos": 178,
+        "calificacion": 8.9
+    },
+    {
+        "titulo": "El señor de los anillos: Las dos torres",
+        "anio_lanzamiento": 2002,
+        "genero": "Fantasía, Aventura",
+        "director": "Peter Jackson",
+        "actores": "Elijah Wood, Viggo Mortensen, Ian McKellen, Orlando Bloom",
+        "duracion_minutos": 179,
+        "calificacion": 8.8
+    },
+    {
+        "titulo": "El señor de los anillos: El retorno del rey",
+        "anio_lanzamiento": 2003,
+        "genero": "Fantasía, Aventura",
+        "director": "Peter Jackson",
+        "actores": "Elijah Wood, Viggo Mortensen, Ian McKellen, Orlando Bloom",
+        "duracion_minutos": 201,
+        "calificacion": 9
+    },
+    {
+        "titulo": "Forrest Gump",
+        "anio_lanzamiento": 1994,
+        "genero": "Drama, Romance",
+        "director": "Robert Zemeckis",
+        "actores": "Tom Hanks, Robin Wright, Gary Sinise",
+        "duracion_minutos": 142,
+        "calificacion": 8.8
+    },
+    {
+        "titulo": "Pulp Fiction",
+        "anio_lanzamiento": 1994,
+        "genero": "Crimen, Drama",
+        "director": "Quentin Tarantino",
+        "actores": "John Travolta, Samuel L. Jackson, Uma Thurman, Bruce Willis",
+        "duracion_minutos": 154,
+        "calificacion": 8.8
+    },
+    {
+        "titulo": "El club de la pelea",
+        "anio_lanzamiento": 1999,
+        "genero": "Drama, Suspenso",
+        "director": "David Fincher",
+        "actores": "Brad Pitt, Edward Norton, Helena Bonham Carter",
+        "duracion_minutos": 139,
+        "calificacion": 8.8
+    },
+    {
+        "titulo": "Gladiador",
+        "anio_lanzamiento": 2000,
+        "genero": "Acción, Drama, Histórico",
+        "director": "Ridley Scott",
+        "actores": "Russell Crowe, Joaquin Phoenix, Connie Nielsen",
+        "duracion_minutos": 155,
+        "calificacion": 8.5
+    },
+    {
+        "titulo": "Django sin cadenas",
+        "anio_lanzamiento": 2012,
+        "genero": "Western, Drama, Acción",
+        "director": "Quentin Tarantino",
+        "actores": "Jamie Foxx, Christoph Waltz, Leonardo DiCaprio",
+        "duracion_minutos": 165,
+        "calificacion": 8.5
+    },
+    {
+        "titulo": "Los infiltrados",
+        "anio_lanzamiento": 2006,
+        "genero": "Crimen, Drama, Suspenso",
+        "director": "Martin Scorsese",
+        "actores": "Leonardo DiCaprio, Matt Damon, Jack Nicholson, Mark Wahlberg",
+        "duracion_minutos": 151,
+        "calificacion": 8.5
+    },
+    {
+        "titulo": "El silencio de los inocentes",
+        "anio_lanzamiento": 1991,
+        "genero": "Crimen, Suspenso, Terror",
+        "director": "Jonathan Demme",
+        "actores": "Jodie Foster, Anthony Hopkins, Scott Glenn",
+        "duracion_minutos": 118,
+        "calificacion": 8.6
+    },
+    {
+        "titulo": "La milla verde",
+        "anio_lanzamiento": 1999,
+        "genero": "Drama, Fantasía",
+        "director": "Frank Darabont",
+        "actores": "Tom Hanks, Michael Clarke Duncan, David Morse",
+        "duracion_minutos": 189,
+        "calificacion": 8.6
+    },
+    {
+        "titulo": "Terminator 2: El juicio final",
+        "anio_lanzamiento": 1991,
+        "genero": "Acción, Ciencia ficción",
+        "director": "James Cameron",
+        "actores": "Arnold Schwarzenegger, Linda Hamilton, Edward Furlong",
+        "duracion_minutos": 137,
+        "calificacion": 8.6
+    },
+    {
+        "titulo": "Volver al futuro",
+        "anio_lanzamiento": 1985,
+        "genero": "Ciencia ficción, Aventura, Comedia",
+        "director": "Robert Zemeckis",
+        "actores": "Michael J. Fox, Christopher Lloyd, Lea Thompson",
+        "duracion_minutos": 116,
+        "calificacion": 8.5
+    },
+    {
+        "titulo": "Jurassic Park",
+        "anio_lanzamiento": 1993,
+        "genero": "Ciencia ficción, Aventura",
+        "director": "Steven Spielberg",
+        "actores": "Sam Neill, Laura Dern, Jeff Goldblum",
+        "duracion_minutos": 127,
+        "calificacion": 8.2
+    },
+    {
+        "titulo": "Tiburón",
+        "anio_lanzamiento": 1975,
+        "genero": "Suspenso, Aventura",
+        "director": "Steven Spielberg",
+        "actores": "Roy Scheider, Robert Shaw, Richard Dreyfuss",
+        "duracion_minutos": 124,
+        "calificacion": 8.1
+    },
+    {
+        "titulo": "E.T. el extraterrestre",
+        "anio_lanzamiento": 1982,
+        "genero": "Ciencia ficción, Aventura",
+        "director": "Steven Spielberg",
+        "actores": "Henry Thomas, Drew Barrymore, Peter Coyote",
+        "duracion_minutos": 115,
+        "calificacion": 7.9
+    },
+    {
+        "titulo": "Titanic",
+        "anio_lanzamiento": 1997,
+        "genero": "Drama, Romance",
+        "director": "James Cameron",
+        "actores": "Leonardo DiCaprio, Kate Winslet, Billy Zane",
+        "duracion_minutos": 194,
+        "calificacion": 7.9
+    },
+    {
+        "titulo": "Avatar",
+        "anio_lanzamiento": 2009,
+        "genero": "Ciencia ficción, Aventura",
+        "director": "James Cameron",
+        "actores": "Sam Worthington, Zoe Saldana, Sigourney Weaver",
+        "duracion_minutos": 162,
+        "calificacion": 7.8
+    },
+    {
+        "titulo": "Avatar: El camino del agua",
+        "anio_lanzamiento": 2022,
+        "genero": "Ciencia ficción, Aventura",
+        "director": "James Cameron",
+        "actores": "Sam Worthington, Zoe Saldana, Sigourney Weaver, Kate Winslet",
+        "duracion_minutos": 192,
+        "calificacion": 7.6
+    },
+    {
+        "titulo": "Avengers: Endgame",
+        "anio_lanzamiento": 2019,
+        "genero": "Acción, Ciencia ficción, Aventura",
+        "director": "Anthony Russo, Joe Russo",
+        "actores": "Robert Downey Jr., Chris Evans, Mark Ruffalo, Scarlett Johansson",
+        "duracion_minutos": 181,
+        "calificacion": 8.4
+    },
+    {
+        "titulo": "Avengers: Infinity War",
+        "anio_lanzamiento": 2018,
+        "genero": "Acción, Ciencia ficción, Aventura",
+        "director": "Anthony Russo, Joe Russo",
+        "actores": "Robert Downey Jr., Chris Hemsworth, Chris Evans, Josh Brolin",
+        "duracion_minutos": 149,
+        "calificacion": 8.4
+    },
+    {
+        "titulo": "Iron Man",
+        "anio_lanzamiento": 2008,
+        "genero": "Acción, Ciencia ficción",
+        "director": "Jon Favreau",
+        "actores": "Robert Downey Jr., Gwyneth Paltrow, Jeff Bridges",
+        "duracion_minutos": 126,
+        "calificacion": 7.9
+    },
+    {
+        "titulo": "Spider-Man: Sin camino a casa",
+        "anio_lanzamiento": 2021,
+        "genero": "Acción, Ciencia ficción, Aventura",
+        "director": "Jon Watts",
+        "actores": "Tom Holland, Zendaya, Benedict Cumberbatch",
+        "duracion_minutos": 148,
+        "calificacion": 8.2
+    },
+    {
+        "titulo": "Black Panther",
+        "anio_lanzamiento": 2018,
+        "genero": "Acción, Aventura, Ciencia ficción",
+        "director": "Ryan Coogler",
+        "actores": "Chadwick Boseman, Michael B. Jordan, Lupita Nyong'o",
+        "duracion_minutos": 134,
+        "calificacion": 7.3
+    },
+    {
+        "titulo": "Joker",
+        "anio_lanzamiento": 2019,
+        "genero": "Crimen, Drama, Suspenso",
+        "director": "Todd Phillips",
+        "actores": "Joaquin Phoenix, Robert De Niro, Zazie Beetz",
+        "duracion_minutos": 122,
+        "calificacion": 8.3
+    },
+    {
+        "titulo": "Parásitos",
+        "anio_lanzamiento": 2019,
+        "genero": "Drama, Suspenso",
+        "director": "Bong Joon Ho",
+        "actores": "Song Kang-ho, Lee Sun-kyun, Cho Yeo-jeong",
+        "duracion_minutos": 132,
+        "calificacion": 8.5
+    },
+    {
+        "titulo": "Oppenheimer",
+        "anio_lanzamiento": 2023,
+        "genero": "Drama, Histórico",
+        "director": "Christopher Nolan",
+        "actores": "Cillian Murphy, Emily Blunt, Robert Downey Jr., Matt Damon",
+        "duracion_minutos": 180,
+        "calificacion": 8.6
+    },
+    {
+        "titulo": "Barbie",
+        "anio_lanzamiento": 2023,
+        "genero": "Comedia, Fantasía",
+        "director": "Greta Gerwig",
+        "actores": "Margot Robbie, Ryan Gosling, America Ferrera",
+        "duracion_minutos": 114,
+        "calificacion": 6.8
+    },
+    {
+        "titulo": "Duna",
+        "anio_lanzamiento": 2021,
+        "genero": "Ciencia ficción, Aventura, Drama",
+        "director": "Denis Villeneuve",
+        "actores": "Timothée Chalamet, Rebecca Ferguson, Oscar Isaac",
+        "duracion_minutos": 155,
+        "calificacion": 8
+    },
+    {
+        "titulo": "Duna: Parte Dos",
+        "anio_lanzamiento": 2024,
+        "genero": "Ciencia ficción, Aventura, Drama",
+        "director": "Denis Villeneuve",
+        "actores": "Timothée Chalamet, Zendaya, Rebecca Ferguson, Austin Butler",
+        "duracion_minutos": 166,
+        "calificacion": 8.5
+    },
+    {
+        "titulo": "Toy Story",
+        "anio_lanzamiento": 1995,
+        "genero": "Animación, Aventura, Comedia",
+        "director": "John Lasseter",
+        "actores": "Tom Hanks, Tim Allen, Don Rickles",
+        "duracion_minutos": 81,
+        "calificacion": 8.3
+    },
+    {
+        "titulo": "Toy Story 3",
+        "anio_lanzamiento": 2010,
+        "genero": "Animación, Aventura, Comedia",
+        "director": "Lee Unkrich",
+        "actores": "Tom Hanks, Tim Allen, Joan Cusack",
+        "duracion_minutos": 103,
+        "calificacion": 8.3
+    },
+    {
+        "titulo": "Coco",
+        "anio_lanzamiento": 2017,
+        "genero": "Animación, Aventura, Fantasía",
+        "director": "Lee Unkrich, Adrian Molina",
+        "actores": "Anthony Gonzalez, Gael García Bernal, Benjamin Bratt",
+        "duracion_minutos": 105,
+        "calificacion": 8.4
+    },
+    {
+        "titulo": "Encanto",
+        "anio_lanzamiento": 2021,
+        "genero": "Animación, Fantasía, Musical",
+        "director": "Jared Bush, Byron Howard, Charise Castro Smith",
+        "actores": "Stephanie Beatriz, María Cecilia Botero, John Leguizamo",
+        "duracion_minutos": 102,
+        "calificacion": 7.2
+    },
+    {
+        "titulo": "El viaje de Chihiro",
+        "anio_lanzamiento": 2001,
+        "genero": "Animación, Fantasía, Aventura",
+        "director": "Hayao Miyazaki",
+        "actores": "Rumi Hiiragi, Miyu Irino, Mari Natsuki",
+        "duracion_minutos": 125,
+        "calificacion": 8.6
+    },
+    {
+        "titulo": "Spider-Man: Un nuevo universo",
+        "anio_lanzamiento": 2018,
+        "genero": "Animación, Acción, Aventura",
+        "director": "Bob Persichetti, Peter Ramsey, Rodney Rothman",
+        "actores": "Shameik Moore, Jake Johnson, Hailee Steinfeld",
+        "duracion_minutos": 117,
+        "calificacion": 8.4
+    },
+    {
+        "titulo": "Los Increíbles",
+        "anio_lanzamiento": 2004,
+        "genero": "Animación, Acción, Aventura",
+        "director": "Brad Bird",
+        "actores": "Craig T. Nelson, Holly Hunter, Samuel L. Jackson",
+        "duracion_minutos": 115,
+        "calificacion": 8
+    },
+    {
+        "titulo": "Harry Potter y la piedra filosofal",
+        "anio_lanzamiento": 2001,
+        "genero": "Fantasía, Aventura",
+        "director": "Chris Columbus",
+        "actores": "Daniel Radcliffe, Emma Watson, Rupert Grint",
+        "duracion_minutos": 152,
+        "calificacion": 7.6
+    },
+    {
+        "titulo": "Harry Potter y las reliquias de la muerte: Parte 2",
+        "anio_lanzamiento": 2011,
+        "genero": "Fantasía, Aventura, Drama",
+        "director": "David Yates",
+        "actores": "Daniel Radcliffe, Emma Watson, Rupert Grint",
+        "duracion_minutos": 130,
+        "calificacion": 8.1
+    },
+    {
+        "titulo": "Star Wars: El imperio contraataca",
+        "anio_lanzamiento": 1980,
+        "genero": "Ciencia ficción, Aventura",
+        "director": "Irvin Kershner",
+        "actores": "Mark Hamill, Harrison Ford, Carrie Fisher",
+        "duracion_minutos": 124,
+        "calificacion": 8.7
+    },
+    {
+        "titulo": "Star Wars: Una nueva esperanza",
+        "anio_lanzamiento": 1977,
+        "genero": "Ciencia ficción, Aventura",
+        "director": "George Lucas",
+        "actores": "Mark Hamill, Harrison Ford, Carrie Fisher",
+        "duracion_minutos": 121,
+        "calificacion": 8.6
+    },
+    {
+        "titulo": "Mad Max: Furia en el camino",
+        "anio_lanzamiento": 2015,
+        "genero": "Acción, Ciencia ficción",
+        "director": "George Miller",
+        "actores": "Tom Hardy, Charlize Theron, Nicholas Hoult",
+        "duracion_minutos": 120,
+        "calificacion": 8.1
+    },
+    {
+        "titulo": "Whiplash: Música y obsesión",
+        "anio_lanzamiento": 2014,
+        "genero": "Drama, Música",
+        "director": "Damien Chazelle",
+        "actores": "Miles Teller, J.K. Simmons, Paul Reiser",
+        "duracion_minutos": 106,
+        "calificacion": 8.5
+    },
+    {
+        "titulo": "La La Land: Una historia de amor",
+        "anio_lanzamiento": 2016,
+        "genero": "Musical, Drama, Romance",
+        "director": "Damien Chazelle",
+        "actores": "Ryan Gosling, Emma Stone, John Legend",
+        "duracion_minutos": 128,
+        "calificacion": 8
+    }
+]

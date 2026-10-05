@@ -56,7 +56,8 @@ Los espacios de tokens del panel ahora muestran consumo real registrado por la a
 | Tablas representadas en PHP | `app/Models/`: `User`, `Pelicula` y `Videojuego` |
 | Creación de las tablas | `database/migrations/` |
 | Cuentas, roles y permisos de prueba | `database/seeders/DatabaseSeeder.php` |
-| Películas y videojuegos ficticios | `database/seeders/CatalogoSeeder.php` |
+| Importación de películas y videojuegos | `database/seeders/CatalogoSeeder.php` |
+| Datos del catálogo (50 películas y 69 videojuegos) | `database/data/peliculas.json` y `database/data/videojuegos.json` |
 | Direcciones del panel y permisos de acceso | `routes/web.php` |
 | Direcciones de autenticación | `routes/auth.php` |
 | Pruebas automáticas | `tests/` |
@@ -88,7 +89,7 @@ php artisan route:list
 php artisan view:clear
 ```
 
-Para actualizar la instalación sin borrar datos, ejecutar `php artisan migrate` y `php artisan permisos:sincronizar`. En una instalación nueva con base vacía, usar `php artisan migrate --seed`; las cuentas de demostración usan contraseña `12345678`. No volver a ejecutar seeders sobre datos que se quieran conservar: el seeder actualiza las cuentas y registros de demostración.
+Para actualizar la instalación sin borrar datos, ejecutar `php artisan migrate` y `php artisan permisos:sincronizar`. Para agregar los datos del catálogo, ejecutar `php artisan db:seed --class=CatalogoSeeder`: inserta títulos ausentes y conserva los existentes. El campo jugadores es texto para admitir rangos como `1-8+`. En una instalación nueva con base vacía, usar `php artisan migrate --seed`; las cuentas de demostración usan contraseña `12345678`. El seeder general actualiza estas cuentas y sus contraseñas.
 
 ## Archivos retirados
 

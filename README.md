@@ -74,7 +74,7 @@ php artisan migrate --seed
 npm run build
 ```
 
-El seeder crea las tres cuentas de demostración indicadas más abajo y 12 películas y 12 videojuegos ficticios. No es necesario importar el archivo SQL si ya ejecutaste las migraciones.
+El seeder crea las tres cuentas de demostración indicadas más abajo y carga 50 películas y 69 videojuegos del material proporcionado. Los datos están en `database/data/peliculas.json` y `database/data/videojuegos.json`; no necesitas ejecutar los INSERT de PostgreSQL.
 
 ### 5. Iniciar el proyecto
 
@@ -105,7 +105,16 @@ En PowerShell puedes usar `npm.cmd` si la política de ejecución bloquea `npm.p
 
 Las migraciones pendientes crean las tablas del chatbot y aplican la normalización de un rol por usuario cuando corresponda. Esa normalización retira permisos individuales antiguos y conserva un solo rol (prioridad: Administrador, Empleado, Cliente y después un personalizado); las cuentas sin rol reciben Cliente. No cambia contraseñas ni elimina usuarios, catálogos o historial. No necesita `migrate:fresh` ni volver a sembrar el catálogo.
 
-Solo en una base de prueba nueva y vacía, `php artisan db:seed` carga las cuentas y 12 registros ficticios por catálogo. El seeder existente actualiza las cuentas de demostración y sus contraseñas y puede actualizar registros ficticios: no es necesario ejecutarlo para activar el chatbot.
+Solo en una base de prueba nueva y vacía, `php artisan db:seed` carga las cuentas y el catálogo. Este comando actualiza las cuentas de demostración y sus contraseñas; no es necesario ejecutarlo para activar el chatbot.
+
+Para importar únicamente el catálogo a una instalación existente de MySQL o MariaDB:
+
+```bash
+php artisan migrate
+php artisan db:seed --class=CatalogoSeeder
+```
+
+La carga agrega títulos ausentes y conserva los registros existentes y sus ediciones. Puedes repetirla sin duplicar títulos. `jugadores` admite texto como `1-8+` o `4-15`. Las películas conservan vacíos los campos plataforma, productora y clasificación porque el material no los incluye. La fecha de registro se asigna al importar, según la hora de Guatemala. Los datos anteriores permanecen en la base; una instalación vacía tendrá 50 películas y 69 videojuegos.
 
 ## Configurar Groq
 
