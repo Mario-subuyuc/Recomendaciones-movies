@@ -76,7 +76,7 @@ class DatabaseSeeder extends Seeder
         */
 
         $admin->syncPermissions(
-            Permission::all()
+            config('roles.predefinidos.Administrador')
         );
 
         /*

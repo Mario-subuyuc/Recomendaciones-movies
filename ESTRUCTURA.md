@@ -1,5 +1,9 @@
 # Guía del proyecto
 
+## Roles y accesos
+
+Los roles predefinidos se fijan en `config/roles.php`. `app/Http/Controllers/Admin/RolController.php` gestiona los roles personalizados y sus vistas están en `resources/views/administracion/roles/`. Solo Administrador entra a `/dashboard/roles` y asigna roles a las cuentas. Cada usuario tiene un único rol; los permisos individuales ya no amplían el acceso. Usuarios se protege por permiso para cada acción. El registro público asigna Cliente.
+
 ## Chatbot y consumo de IA
 
 | Parte | Ubicación |

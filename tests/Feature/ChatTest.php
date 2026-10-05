@@ -165,7 +165,9 @@ class ChatTest extends TestCase
     {
         Http::fake();
         $user = User::factory()->create();
-        $user->givePermissionTo('peliculas.ver');
+        $role = \Spatie\Permission\Models\Role::create(['name' => 'Consulta películas', 'guard_name' => 'web']);
+        $role->givePermissionTo('peliculas.ver');
+        $user->syncRoles($role);
         $this->actingAs($user)->postJson('/dashboard/chat', ['categoria' => 'videojuegos', 'pregunta' => 'Dame videojuegos'])->assertForbidden();
         $lock = Cache::lock('chat-usuario-'.$user->id, 75);
         $lock->get();

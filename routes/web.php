@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\RolController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PeliculaController;
@@ -45,7 +46,11 @@ Route::prefix('dashboard')->middleware('auth')->group(function () {
     }
 });
 
-Route::prefix('dashboard')->name('admin.')->middleware(['auth', 'role:Administrador'])->group(function () {
-    Route::resource('usuarios', UsuarioController::class)
-        ->parameters(['usuarios' => 'user'])->except('show');
+Route::prefix('dashboard')->name('admin.')->middleware('auth')->group(function () {
+    Route::resource('usuarios', UsuarioController::class)->parameters(['usuarios' => 'user'])->except('show')
+        ->middlewareFor('index', 'permission:usuarios.ver')
+        ->middlewareFor(['create', 'store'], 'permission:usuarios.crear')
+        ->middlewareFor(['edit', 'update'], 'permission:usuarios.editar')
+        ->middlewareFor('destroy', 'permission:usuarios.eliminar');
+    Route::resource('roles', RolController::class)->except('show')->middleware('role:Administrador');
 });

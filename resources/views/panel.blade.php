@@ -24,12 +24,12 @@
                         {{ auth()->user()->roles->pluck('name')->join(', ') ?: 'Sin rol asignado' }}
                     </span>
 
-                    @role('Administrador')
+                    @can('usuarios.ver')
                         <div class="mt-4">
                             <h3 class="h5">Usuarios</h3>
 
                             <p class="mt-2">
-                                Crea y administra usuarios, roles y permisos adicionales.
+                                Consulta los usuarios y realiza las acciones autorizadas para tu rol.
                             </p>
 
                             <a class="btn btn-primary mt-3"
@@ -37,7 +37,7 @@
                                 Administrar usuarios
                             </a>
                         </div>
-                    @endrole
+                    @endcan
                 </div>
             </div>
         </div>

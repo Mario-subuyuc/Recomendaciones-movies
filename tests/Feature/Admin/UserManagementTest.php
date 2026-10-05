@@ -50,12 +50,12 @@ class UserManagementTest extends TestCase
         $this->get('/dashboard')->assertOk()->assertSee('Administrar usuarios');
         $this->get('/dashboard/usuarios')->assertOk();
         $this->get('/dashboard/usuarios/create')->assertOk();
-        $data = ['name' => 'Nuevo', 'email' => 'nuevo@example.com', 'password' => 'password123', 'password_confirmation' => 'password123', 'roles' => ['Cliente'], 'permissions' => ['peliculas.editar']];
+        $data = ['name' => 'Nuevo', 'email' => 'nuevo@example.com', 'password' => 'password123', 'password_confirmation' => 'password123', 'roles' => ['Cliente']];
         $this->post('/dashboard/usuarios', $data)->assertSessionHasNoErrors()->assertRedirect('/dashboard/usuarios');
         $user = User::where('email', $data['email'])->firstOrFail();
         $this->assertTrue(Hash::check('password123', $user->password));
         $this->assertTrue($user->hasRole('Cliente'));
-        $this->assertTrue($user->hasDirectPermission('peliculas.editar'));
+        $this->assertFalse($user->hasDirectPermission('peliculas.editar'));
         $this->assertTrue($user->hasPermissionTo('peliculas.ver'));
         $this->get("/dashboard/usuarios/{$user->id}/edit")->assertOk();
         $this->put("/dashboard/usuarios/{$user->id}", ['name' => 'Editado', 'email' => $user->email, 'roles' => ['Empleado'], 'password' => ''])->assertSessionHasNoErrors();
@@ -72,7 +72,7 @@ class UserManagementTest extends TestCase
     {
         $admin = User::where('email', 'mariosubuyucfb@gmail.com')->first();
         $this->actingAs($admin);
-        $this->post('/dashboard/usuarios', ['name' => 'Test', 'email' => $admin->email, 'password' => 'password123', 'password_confirmation' => 'password123', 'roles' => ['Inventado'], 'permissions' => ['inventado.ver']])->assertSessionHasErrors(['email', 'roles.0', 'permissions.0']);
+        $this->post('/dashboard/usuarios', ['name' => 'Test', 'email' => $admin->email, 'password' => 'password123', 'password_confirmation' => 'password123', 'roles' => ['Inventado'], 'permissions' => ['inventado.ver']])->assertSessionHasErrors(['email', 'roles.0', 'permissions']);
         $this->put("/dashboard/usuarios/{$admin->id}", ['name' => $admin->name, 'email' => $admin->email, 'roles' => ['Cliente']])->assertSessionHasErrors('roles');
         $this->delete("/dashboard/usuarios/{$admin->id}")->assertSessionHasErrors('user');
         $this->assertModelExists($admin);

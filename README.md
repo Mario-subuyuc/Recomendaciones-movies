@@ -133,7 +133,7 @@ No se ha realizado una llamada real con credenciales. Las pruebas usan HTTP simu
 
 - `/login`: acceso.
 - `/dashboard`: resumen y gráfica de consumo personal.
-- `/dashboard/usuarios`: CRUD exclusivo del Administrador.
+- `/dashboard/usuarios`: CRUD protegido por permisos para cada acción.
 - `/dashboard/peliculas` y `/dashboard/videojuegos`: catálogos con detalles, creación, edición y eliminación.
 - `/dashboard/chat`: asistente del catálogo.
 - `/dashboard/historial`: historial personal paginado.
@@ -141,7 +141,7 @@ No se ha realizado una llamada real con credenciales. Las pruebas usan HTTP simu
 - `/dashboard/consumo`: totales propios y barras por categoría.
 - `/profile`: datos personales, contraseña y eliminación de cuenta.
 
-El chatbot reutiliza `peliculas.ver` y `videojuegos.ver`. Para consultar una categoría se exige su permiso; el selector solo ofrece categorías autorizadas. Los usuarios sin permisos de lectura no tienen acceso al chat. No se modifica el registro público de Breeze ni los permisos existentes.
+El chatbot reutiliza `peliculas.ver` y `videojuegos.ver`. Para consultar una categoría se exige su permiso; el selector solo ofrece categorías autorizadas. Los usuarios sin permisos de lectura no tienen acceso al chat. El registro público asigna automáticamente el rol Cliente.
 
 Las cuentas del seeder de prueba mantienen contraseña `12345678`:
 
@@ -151,7 +151,7 @@ Las cuentas del seeder de prueba mantienen contraseña `12345678`:
 | laureano | msubuyuct@miumg.edu.gt | Empleado |
 | user1 | holamariost@gmail.com | Cliente |
 
-Administrador administra todo. Empleado ve, crea y edita catálogos. Cliente consulta catálogos. Los permisos directos se suman a los de los roles. El módulo Usuarios sigue siendo exclusivo del Administrador.
+Administrador administra todo. Empleado ve, crea y edita catálogos. Cliente consulta catálogos. Cada usuario tiene un único rol y no admite permisos individuales. Los roles personalizados permiten acceso a Usuarios según las acciones seleccionadas. Solo el Administrador gestiona roles y asignaciones.
 
 ## Funcionamiento del chat
 
@@ -221,3 +221,15 @@ npm run build
 Las pruebas usan SQLite en memoria y respuestas HTTP simuladas: no tocan la base configurada para la aplicación ni consumen Groq. Cubren acceso, aislamiento, filtros estrictos, ausencia de resultados, entradas inválidas, errores del proveedor, conteo Unicode, consumo parcial y permisos por categoría. La migración adicional se comprobó sobre la base MySQL/MariaDB local sin recrear las tablas existentes.
 
 Pendiente con API real: introducir una clave válida y modelo autorizado, comprobar interpretación y redacción en español, latencia, límites de la cuenta y consultas en ambas categorías. Los mensajes de error evitan mostrar cuerpos internos de Groq o credenciales.
+
+## Roles personalizados y permisos fijos
+
+En `/dashboard/roles`, el Administrador puede crear un rol como **Consulta de usuarios**, marcar solo `usuarios.ver` y asignarlo desde la edición de un usuario. Esa cuenta podrá consultar la tabla, pero no crear, editar ni eliminar ni entrar a otros catálogos sin sus permisos.
+
+Administrador, Empleado y Cliente son roles predefinidos: sus permisos están fijados en `config/roles.php`. No pueden renombrarse, eliminarse ni ampliarse desde la interfaz. Los permisos individuales no conceden acceso, incluso si se insertan por otro mecanismo. Los roles personalizados sí permiten cambiar los permisos y esos cambios afectan a todas las cuentas asignadas a ese rol.
+
+Un índice único en `model_has_roles` impide múltiples roles por usuario. La migración de actualización normaliza asignaciones existentes, conserva Administrador primero, luego Empleado, Cliente y finalmente un rol personalizado; si no había rol, asigna Cliente. Retira permisos individuales anteriores y sincroniza los roles predefinidos. No cambia contraseñas ni borra cuentas, catálogos o historial. La normalización de permisos no se revierte al deshacer la migración.
+
+Para actualizar otra instalación: `php artisan migrate` y `php artisan permission:cache-reset`. No hace falta volver a ejecutar seeders.
+
+Un rol personalizado con `usuarios.crear` puede crear cuentas Cliente. Con `usuarios.editar`/`usuarios.eliminar` puede gestionar cuentas Cliente y sus propios datos (la eliminación propia sigue bloqueada en el CRUD). Solo el Administrador modifica cuentas de otros roles o asigna roles, para evitar escalamiento mediante cambios de correo o contraseña. No se permite eliminar roles personalizados mientras tengan usuarios: primero reasignar esas cuentas.

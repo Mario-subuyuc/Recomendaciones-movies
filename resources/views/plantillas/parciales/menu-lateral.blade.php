@@ -21,17 +21,18 @@
                 </li>
                 @endcan
                 @endforeach
-                @role('Administrador')
+                @if(auth()->user()->hasRole('Administrador') || auth()->user()->can('usuarios.ver') || auth()->user()->can('usuarios.crear'))
                 <li class="sidebar-item">
-                    <details class="sidebar-section" @if(request()->routeIs('admin.usuarios.*')) open @endif>
+                    <details class="sidebar-section" @if(request()->routeIs('admin.usuarios.*', 'admin.roles.*')) open @endif>
                         <summary class="sidebar-link"><span>Administración</span></summary>
                         <ul class="dashboard-submenu">
-                            <li><a class="{{ request()->routeIs('admin.usuarios.index', 'admin.usuarios.edit') ? 'active' : '' }}" href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>
-                            <li><a class="{{ request()->routeIs('admin.usuarios.create') ? 'active' : '' }}" href="{{ route('admin.usuarios.create') }}">Crear usuario</a></li>
+                            @can('usuarios.ver')<li><a class="{{ request()->routeIs('admin.usuarios.index', 'admin.usuarios.edit') ? 'active' : '' }}" href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>@endcan
+                            @can('usuarios.crear')<li><a class="{{ request()->routeIs('admin.usuarios.create') ? 'active' : '' }}" href="{{ route('admin.usuarios.create') }}">Crear usuario</a></li>@endcan
+                            @role('Administrador')<li><a href="{{ route('admin.roles.index') }}">Roles y permisos</a></li>@endrole
                         </ul>
                     </details>
                 </li>
-                @endrole
+                @endif
                 <li class="sidebar-item">
                     <a class="sidebar-link {{ request()->routeIs('profile.*') ? 'active' : '' }}"
                         href="{{ route('profile.edit') }}">

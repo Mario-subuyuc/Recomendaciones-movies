@@ -9,7 +9,6 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
-use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UsuarioController extends Controller
@@ -28,21 +27,24 @@ class UsuarioController extends Controller
     {
         DB::transaction(function () use ($request) {
             $user = User::create($request->safe()->only(['name', 'email', 'password']));
-            $user->syncRoles($request->validated('roles'));
-            $user->syncPermissions($request->validated('permissions', []));
+            $user->syncRoles($request->user()->hasRole('Administrador') ? $request->validated('roles') : ['Cliente']);
+            $user->syncPermissions([]);
         });
 
-        return to_route('admin.usuarios.index')->with('status', 'Usuario creado correctamente.');
+        return to_route(auth()->user()->can('usuarios.ver') ? 'admin.usuarios.index' : 'dashboard')->with('status', 'Usuario creado correctamente.');
     }
 
     public function edit(User $user): View
     {
+        $this->comprobarDestino($user);
+
         return $this->form($user->load(['roles', 'permissions']));
     }
 
     public function update(GuardarUsuarioRequest $request, User $user): RedirectResponse
     {
-        if ($user->is($request->user()) && ! in_array('Administrador', $request->validated('roles'), true)) {
+        $this->comprobarDestino($user);
+        if ($request->user()->hasRole('Administrador') && $user->is($request->user()) && ! in_array('Administrador', $request->validated('roles'), true)) {
             throw ValidationException::withMessages(['roles' => 'No puedes quitarte el rol Administrador.']);
         }
 
@@ -55,21 +57,24 @@ class UsuarioController extends Controller
                 $attributes['email_verified_at'] = null;
             }
             $user->forceFill($attributes)->save();
-            $user->syncRoles($request->validated('roles'));
-            $user->syncPermissions($request->validated('permissions', []));
+            if ($request->user()->hasRole('Administrador')) {
+                $user->syncRoles($request->validated('roles'));
+            }
+            $user->syncPermissions([]);
         });
 
-        return to_route('admin.usuarios.index')->with('status', 'Usuario actualizado correctamente.');
+        return to_route(auth()->user()->can('usuarios.ver') ? 'admin.usuarios.index' : 'dashboard')->with('status', 'Usuario actualizado correctamente.');
     }
 
     public function destroy(User $user): RedirectResponse
     {
+        $this->comprobarDestino($user);
         if ($user->is(auth()->user())) {
             throw ValidationException::withMessages(['user' => 'No puedes eliminar tu propia cuenta desde este módulo.']);
         }
         DB::transaction(fn () => $user->delete());
 
-        return to_route('admin.usuarios.index')->with('status', 'Usuario eliminado correctamente.');
+        return to_route(auth()->user()->can('usuarios.ver') ? 'admin.usuarios.index' : 'dashboard')->with('status', 'Usuario eliminado correctamente.');
     }
 
     private function form(User $user): View
@@ -77,7 +82,11 @@ class UsuarioController extends Controller
         return view('administracion.usuarios.formulario', [
             'user' => $user,
             'roles' => Role::where('guard_name', 'web')->with('permissions')->orderBy('name')->get(),
-            'permissionGroups' => Permission::where('guard_name', 'web')->orderBy('name')->get()->groupBy(fn ($permission) => explode('.', $permission->name)[0]),
         ]);
+    }
+
+    private function comprobarDestino(User $user): void
+    {
+        abort_unless(auth()->user()->hasRole('Administrador') || $user->is(auth()->user()) || $user->hasRole('Cliente'), 403, 'Solo el Administrador puede modificar cuentas con roles privilegiados.');
     }
 }

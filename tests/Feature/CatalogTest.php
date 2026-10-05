@@ -48,6 +48,7 @@ class CatalogTest extends TestCase
             $url = '/dashboard/'.$module;
             $this->get($url)->assertRedirect('/login');
             $client = User::where('email', 'holamariost@gmail.com')->first();
+            $client->syncRoles('Cliente');
             $this->actingAs($client);
             $this->get($url)->assertOk();
             $this->get($url.'/create')->assertForbidden();
@@ -56,6 +57,10 @@ class CatalogTest extends TestCase
             $this->put($url.'/'.$record->getKey(), [])->assertForbidden();
             $this->delete($url.'/'.$record->getKey())->assertForbidden();
             $client->givePermissionTo($module.'.crear');
+            $this->get($url.'/create')->assertForbidden();
+            $role = \Spatie\Permission\Models\Role::create(['name' => 'Crear '.$module, 'guard_name' => 'web']);
+            $role->syncPermissions([$module.'.ver', $module.'.crear']);
+            $client->syncRoles($role);
             $this->get($url.'/create')->assertOk();
             $this->actingAs(User::where('email', 'msubuyuct@miumg.edu.gt')->first());
             $this->get($url.'/create')->assertOk();

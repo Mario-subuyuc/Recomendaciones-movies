@@ -11,6 +11,23 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
+    public function hasPermissionTo($permission, $guardName = null): bool
+    {
+        $permission = $this->filterPermission($permission, $guardName);
+        if ($permission->guard_name !== 'web') return false;
+        $roles = $this->loadMissing('roles')->roles;
+        if ($roles->count() !== 1) {
+            return false;
+        }
+        $name = $roles->first()->name;
+        $fixed = config('roles.predefinidos');
+        if (array_key_exists($name, $fixed)) {
+            return in_array($permission->name, $fixed[$name], true);
+        }
+
+        return $this->hasPermissionViaRole($permission);
+    }
+
     use HasFactory, HasRoles, Notifiable;
 
     protected $fillable = [

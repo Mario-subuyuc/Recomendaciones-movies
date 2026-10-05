@@ -7,21 +7,15 @@
             <x-campo-panel name="email" label="Correo electrónico" type="email" :value="$user->email" required maxlength="255" />
             <x-campo-panel name="password" :label="$user->exists ? 'Nueva contraseña (dejar vacía para conservar la actual)' : 'Contraseña'" type="password" autocomplete="new-password" :required="! $user->exists" />
             <x-campo-panel name="password_confirmation" label="Confirmar contraseña" type="password" autocomplete="new-password" :required="! $user->exists" />
-            <fieldset class="border rounded p-3 mb-4"><legend class="h5 mb-2">Roles</legend><p class="small text-muted mb-3">Selecciona al menos un rol. Sus permisos se heredan automáticamente.</p>
-                @foreach ($roles as $role)
-                    <label class="d-block mb-3"><input class="form-check-input me-2" type="checkbox" name="roles[]" value="{{ $role->name }}" @checked(in_array($role->name, old('roles', $errors->any() ? [] : $user->roles->pluck('name')->all())))> {{ $role->name }}
-                        <span class="d-block small text-muted">{{ $role->permissions->pluck('name')->join(', ') ?: 'Sin permisos' }}</span>
-                    </label>
-                @endforeach
-            </fieldset>
-
-            <fieldset class="border rounded p-3 mb-4"><legend class="h5 mb-2">Permisos adicionales del usuario</legend><p class="small text-muted mb-3">Se suman a los permisos de sus roles. Desmarcarlos no quita permisos heredados. El módulo de usuarios sigue siendo exclusivo del Administrador.</p>
-                @foreach ($permissionGroups as $module => $permissions)
-                    <div class="mb-4"><h3 class="h6 text-capitalize mb-2">{{ $module }}</h3>
-                        @foreach ($permissions as $permission)<label class="d-block mb-2"><input class="form-check-input me-2" type="checkbox" name="permissions[]" value="{{ $permission->name }}" @checked(in_array($permission->name, old('permissions', $errors->any() ? [] : $user->permissions->pluck('name')->all())))> {{ $permission->name }}</label>@endforeach
-                    </div>
-                @endforeach
-            </fieldset>
-            <div class="d-flex gap-3 mt-4"><button class="btn btn-primary" type="submit">Guardar usuario</button><a class="btn btn-outline-primary" href="{{ route('admin.usuarios.index') }}">Cancelar</a></div>
+            @role('Administrador')
+            <div class="mb-4"><label class="form-label" for="rol">Rol del usuario</label>
+                <select id="rol" name="roles[]" class="form-select" required><option value="">Selecciona un rol</option>
+                    @foreach($roles as $role)<option value="{{ $role->name }}" @selected($role->name === (old('roles', $user->roles->pluck('name')->all())[0] ?? ''))>{{ $role->name }}</option>@endforeach
+                </select><p class="small text-muted mt-2">Un único rol define todos los accesos. Configura los roles personalizados desde Roles.</p>
+            </div>
+            @else
+                <p class="text-muted">{{ $user->exists ? 'El rol actual se conserva. Solo el Administrador puede cambiarlo.' : 'La nueva cuenta se creará con el rol Cliente.' }}</p>
+            @endrole
+            <div class="d-flex gap-3 mt-4"><button class="btn btn-primary" type="submit">Guardar usuario</button><a class="btn btn-outline-primary" href="{{ route(auth()->user()->can('usuarios.ver') ? 'admin.usuarios.index' : 'dashboard') }}">Cancelar</a></div>
         </form>
 </x-plantilla-panel>
