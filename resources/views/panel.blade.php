@@ -62,7 +62,8 @@
 
     {{-- Módulos --}}
     <div class="row g-4">
-        @foreach(['peliculas' => 'Películas', 'videojuegos' => 'Videojuegos'] as $module => $label)
+        @foreach(collect(config('modulos'))->except('usuarios') as $module => $definition)
+                @php($label = $definition['nombre'])
 
             @can($module.'.ver')
                 <div class="col-lg-6">
@@ -77,7 +78,7 @@
                             </p>
 
                             <a class="btn btn-primary"
-                               href="{{ route($module.'.index') }}">
+                               href="{{ route($definition['ruta']) }}">
                                 Ver {{ mb_strtolower($label) }}
                             </a>
                         </div>

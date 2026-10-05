@@ -2,7 +2,7 @@
 
 ## Roles y accesos
 
-Los roles predefinidos se fijan en `config/roles.php`. `app/Http/Controllers/Admin/RolController.php` gestiona los roles personalizados y sus vistas están en `resources/views/administracion/roles/`. Solo Administrador entra a `/dashboard/roles` y asigna roles a las cuentas. Cada usuario tiene un único rol; los permisos individuales ya no amplían el acceso. Usuarios se protege por permiso para cada acción. El registro público asigna Cliente.
+Los permisos iniciales se definen en `config/roles.php`; Empleado y Cliente son editables desde la interfaz. El catálogo de módulos está en `config/modulos.php`, la sincronización en `app/Services/CatalogoPermisos.php` y el comando es `php artisan permisos:sincronizar`. `app/Http/Controllers/Admin/RolController.php` gestiona los roles personalizados y los permisos de Empleado y Cliente y sus vistas están en `resources/views/administracion/roles/`. Solo Administrador entra a `/dashboard/roles` y asigna roles a las cuentas. Cada usuario tiene un único rol; los permisos individuales ya no amplían el acceso. Usuarios se protege por permiso para cada acción. El registro público asigna Cliente.
 
 ## Chatbot y consumo de IA
 
@@ -34,13 +34,21 @@ Los espacios de tokens del panel ahora muestran consumo real registrado por la a
 | Menú lateral | `resources/views/plantillas/parciales/menu-lateral.blade.php` |
 | Nombre, correo y roles de la barra superior | `resources/views/plantillas/parciales/usuario-barra-superior.blade.php` |
 | Pie de página | `resources/views/plantillas/parciales/pie-pagina.blade.php` |
-| Espacios para los futuros gráficos de tokens | `resources/views/panel/parciales/resumen-tokens.blade.php` |
+| Resumen de consumo y gráfica de tokens académicos | `resources/views/panel/parciales/resumen-tokens.blade.php` |
 | Formularios de acceso y recuperación de contraseña | `resources/views/autenticacion/` |
 | Perfil y sus formularios | `resources/views/perfil/` |
 | Listado y formulario de usuarios | `resources/views/administracion/usuarios/` |
 | Vistas compartidas de películas y videojuegos | `resources/views/catalogo/` |
 | Campos de formulario reutilizables del panel | `resources/views/components/campo-panel.blade.php` |
 | Gestión de usuarios | `app/Http/Controllers/Admin/UsuarioController.php` |
+| Gestión de roles editables | `app/Http/Controllers/Admin/RolController.php` |
+| Pantalla de rutas y sincronización | `app/Http/Controllers/Admin/PermisoController.php` |
+| Registro de módulos y acciones | `config/modulos.php` |
+| Permisos iniciales de los roles | `config/roles.php` |
+| Sincronización sin reemplazar accesos | `app/Services/CatalogoPermisos.php` |
+| Comando `permisos:sincronizar` | `app/Console/Commands/SincronizarPermisos.php` |
+| Formularios de roles y tabla de rutas | `resources/views/administracion/roles/` |
+| Restricción de un rol y normalización de asignaciones anteriores | `database/migrations/2026_10_07_000001_normalize_user_roles.php` |
 | Gestión del perfil | `app/Http/Controllers/PerfilController.php` |
 | Lógica compartida de los catálogos | `app/Http/Controllers/CatalogoController.php` |
 | Campos específicos de películas y videojuegos | `PeliculaController.php` y `VideojuegoController.php` en la misma carpeta |
@@ -80,7 +88,7 @@ php artisan route:list
 php artisan view:clear
 ```
 
-Para recrear la base de datos de prueba: `php artisan migrate:fresh --seed`. Este comando elimina los datos existentes. Las tres cuentas de demostración conservan la contraseña `12345678`.
+Para actualizar la instalación sin borrar datos, ejecutar `php artisan migrate` y `php artisan permisos:sincronizar`. En una instalación nueva con base vacía, usar `php artisan migrate --seed`; las cuentas de demostración usan contraseña `12345678`. No volver a ejecutar seeders sobre datos que se quieran conservar: el seeder actualiza las cuentas y registros de demostración.
 
 ## Archivos retirados
 

@@ -20,11 +20,14 @@ class UsuarioController extends Controller
 
     public function create(): View
     {
+        abort_unless(auth()->user()->puedeCrearCliente(), 403, 'El rol Cliente tiene accesos superiores a los tuyos. Solicita la creación al Administrador.');
+
         return $this->form(new User);
     }
 
     public function store(GuardarUsuarioRequest $request): RedirectResponse
     {
+        abort_unless($request->user()->puedeCrearCliente(), 403, 'El rol Cliente tiene accesos superiores a los tuyos. Solicita la creación al Administrador.');
         DB::transaction(function () use ($request) {
             $user = User::create($request->safe()->only(['name', 'email', 'password']));
             $user->syncRoles($request->user()->hasRole('Administrador') ? $request->validated('roles') : ['Cliente']);
@@ -87,6 +90,6 @@ class UsuarioController extends Controller
 
     private function comprobarDestino(User $user): void
     {
-        abort_unless(auth()->user()->hasRole('Administrador') || $user->is(auth()->user()) || $user->hasRole('Cliente'), 403, 'Solo el Administrador puede modificar cuentas con roles privilegiados.');
+        abort_unless(auth()->user()->puedeGestionarUsuario($user), 403, 'Solo el Administrador puede modificar cuentas con accesos superiores a los tuyos.');
     }
 }

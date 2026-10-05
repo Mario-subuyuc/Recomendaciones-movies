@@ -1,11 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\PermisoController;
 use App\Http\Controllers\Admin\RolController;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\PeliculaController;
 use App\Http\Controllers\PerfilController;
-use App\Http\Controllers\VideojuegoController;
 use App\Services\ResumenConsumo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -35,14 +34,32 @@ Route::prefix('dashboard')->middleware(['auth', 'permission:peliculas.ver|videoj
 });
 
 Route::prefix('dashboard')->middleware('auth')->group(function () {
-    foreach (['peliculas' => PeliculaController::class, 'videojuegos' => VideojuegoController::class] as $module => $controller) {
-        Route::get($module, [$controller, 'index'])->middleware('permission:'.$module.'.ver')->name($module.'.index');
-        Route::get($module.'/create', [$controller, 'create'])->middleware('permission:'.$module.'.crear')->name($module.'.create');
-        Route::post($module, [$controller, 'store'])->middleware('permission:'.$module.'.crear')->name($module.'.store');
-        Route::get($module.'/{record}/edit', [$controller, 'edit'])->middleware('permission:'.$module.'.editar')->name($module.'.edit');
-        Route::get($module.'/{record}', [$controller, 'show'])->middleware('permission:'.$module.'.ver')->name($module.'.show');
-        Route::match(['put', 'patch'], $module.'/{record}', [$controller, 'update'])->middleware('permission:'.$module.'.editar')->name($module.'.update');
-        Route::delete($module.'/{record}', [$controller, 'destroy'])->middleware('permission:'.$module.'.eliminar')->name($module.'.destroy');
+    foreach (config('modulos') as $module => $definition) {
+        if (! isset($definition['controlador'])) {
+            continue;
+        }
+        $controller = $definition['controlador'];
+        if (in_array('ver', $definition['acciones'], true)) {
+            Route::get($module, [$controller, 'index'])->middleware('permission:'.$module.'.ver')->name($module.'.index');
+        }
+        if (in_array('crear', $definition['acciones'], true)) {
+            Route::get($module.'/create', [$controller, 'create'])->middleware('permission:'.$module.'.crear')->name($module.'.create');
+        }
+        if (in_array('crear', $definition['acciones'], true)) {
+            Route::post($module, [$controller, 'store'])->middleware('permission:'.$module.'.crear')->name($module.'.store');
+        }
+        if (in_array('editar', $definition['acciones'], true)) {
+            Route::get($module.'/{record}/edit', [$controller, 'edit'])->middleware('permission:'.$module.'.editar')->name($module.'.edit');
+        }
+        if (in_array('ver', $definition['acciones'], true)) {
+            Route::get($module.'/{record}', [$controller, 'show'])->middleware('permission:'.$module.'.ver')->name($module.'.show');
+        }
+        if (in_array('editar', $definition['acciones'], true)) {
+            Route::match(['put', 'patch'], $module.'/{record}', [$controller, 'update'])->middleware('permission:'.$module.'.editar')->name($module.'.update');
+        }
+        if (in_array('eliminar', $definition['acciones'], true)) {
+            Route::delete($module.'/{record}', [$controller, 'destroy'])->middleware('permission:'.$module.'.eliminar')->name($module.'.destroy');
+        }
     }
 });
 
@@ -53,4 +70,6 @@ Route::prefix('dashboard')->name('admin.')->middleware('auth')->group(function (
         ->middlewareFor(['edit', 'update'], 'permission:usuarios.editar')
         ->middlewareFor('destroy', 'permission:usuarios.eliminar');
     Route::resource('roles', RolController::class)->except('show')->middleware('role:Administrador');
+    Route::get('permisos', [PermisoController::class, 'index'])->middleware('role:Administrador')->name('permisos.index');
+    Route::post('permisos/sincronizar', [PermisoController::class, 'sincronizar'])->middleware('role:Administrador')->name('permisos.sincronizar');
 });

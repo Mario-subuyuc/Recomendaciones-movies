@@ -96,13 +96,14 @@ Desde la carpeta del proyecto:
 composer install
 npm install
 php artisan migrate
+php artisan permisos:sincronizar
 npm run build
 php artisan serve
 ```
 
 En PowerShell puedes usar `npm.cmd` si la política de ejecución bloquea `npm.ps1`. En una instalación nueva, copiar `.env.example` a `.env`, configurar la base de datos y ejecutar `php artisan key:generate` antes de migrar. No reemplazar `.env` ni regenerar APP_KEY en una instalación existente.
 
-La actualización del chatbot crea únicamente `conversaciones`, `mensajes` y `consumo_tokens`. No necesita `migrate:fresh` ni volver a sembrar el catálogo. No ejecutar comandos de reconstrucción para conservar tus datos.
+Las migraciones pendientes crean las tablas del chatbot y aplican la normalización de un rol por usuario cuando corresponda. Esa normalización retira permisos individuales antiguos y conserva un solo rol (prioridad: Administrador, Empleado, Cliente y después un personalizado); las cuentas sin rol reciben Cliente. No cambia contraseñas ni elimina usuarios, catálogos o historial. No necesita `migrate:fresh` ni volver a sembrar el catálogo.
 
 Solo en una base de prueba nueva y vacía, `php artisan db:seed` carga las cuentas y 12 registros ficticios por catálogo. El seeder existente actualiza las cuentas de demostración y sus contraseñas y puede actualizar registros ficticios: no es necesario ejecutarlo para activar el chatbot.
 
@@ -134,6 +135,8 @@ No se ha realizado una llamada real con credenciales. Las pruebas usan HTTP simu
 - `/login`: acceso.
 - `/dashboard`: resumen y gráfica de consumo personal.
 - `/dashboard/usuarios`: CRUD protegido por permisos para cada acción.
+- `/dashboard/roles`: gestión de roles y sus permisos, exclusiva del Administrador.
+- `/dashboard/permisos`: catálogo de rutas protegidas y sincronización, exclusivo del Administrador.
 - `/dashboard/peliculas` y `/dashboard/videojuegos`: catálogos con detalles, creación, edición y eliminación.
 - `/dashboard/chat`: asistente del catálogo.
 - `/dashboard/historial`: historial personal paginado.
@@ -151,7 +154,7 @@ Las cuentas del seeder de prueba mantienen contraseña `12345678`:
 | laureano | msubuyuct@miumg.edu.gt | Empleado |
 | user1 | holamariost@gmail.com | Cliente |
 
-Administrador administra todo. Empleado ve, crea y edita catálogos. Cliente consulta catálogos. Cada usuario tiene un único rol y no admite permisos individuales. Los roles personalizados permiten acceso a Usuarios según las acciones seleccionadas. Solo el Administrador gestiona roles y asignaciones.
+Los accesos iniciales son: Administrador administra todo, Empleado ve, crea y edita catálogos, y Cliente consulta catálogos. Los permisos de Empleado y Cliente pueden modificarse desde Roles, por lo que sus accesos efectivos dependen de esa configuración. Cada usuario tiene un único rol y no admite permisos individuales. Los roles personalizados permiten acceso a Usuarios según las acciones seleccionadas. Solo el Administrador gestiona roles y asignaciones.
 
 ## Funcionamiento del chat
 
@@ -218,18 +221,51 @@ php artisan view:clear
 npm run build
 ```
 
-Las pruebas usan SQLite en memoria y respuestas HTTP simuladas: no tocan la base configurada para la aplicación ni consumen Groq. Cubren acceso, aislamiento, filtros estrictos, ausencia de resultados, entradas inválidas, errores del proveedor, conteo Unicode, consumo parcial y permisos por categoría. La migración adicional se comprobó sobre la base MySQL/MariaDB local sin recrear las tablas existentes.
+Las pruebas usan SQLite en memoria y respuestas HTTP simuladas: no tocan la base configurada para la aplicación ni consumen Groq. Cubren acceso, aislamiento, filtros estrictos, ausencia de resultados, entradas inválidas, errores del proveedor, conteo Unicode, consumo parcial, roles editables, un rol por usuario, sincronización repetible y protección contra ampliación de privilegios. Las migraciones adicionales se comprobaron sobre la base MySQL/MariaDB local sin recrear las tablas existentes.
 
 Pendiente con API real: introducir una clave válida y modelo autorizado, comprobar interpretación y redacción en español, latencia, límites de la cuenta y consultas en ambas categorías. Los mensajes de error evitan mostrar cuerpos internos de Groq o credenciales.
 
-## Roles personalizados y permisos fijos
+## Módulos, rutas y permisos sincronizables
 
-En `/dashboard/roles`, el Administrador puede crear un rol como **Consulta de usuarios**, marcar solo `usuarios.ver` y asignarlo desde la edición de un usuario. Esa cuenta podrá consultar la tabla, pero no crear, editar ni eliminar ni entrar a otros catálogos sin sus permisos.
+El Administrador puede consultar `/dashboard/permisos` desde **Administración → Rutas del proyecto**. La tabla muestra los permisos declarados y las rutas que los usan (método HTTP, URL y nombre). Login, logout y otras rutas especiales no se convierten automáticamente en permisos administrables.
 
-Administrador, Empleado y Cliente son roles predefinidos: sus permisos están fijados en `config/roles.php`. No pueden renombrarse, eliminarse ni ampliarse desde la interfaz. Los permisos individuales no conceden acceso, incluso si se insertan por otro mecanismo. Los roles personalizados sí permiten cambiar los permisos y esos cambios afectan a todas las cuentas asignadas a ese rol.
+`config/modulos.php` es el catálogo central. Para un nuevo CRUD, crea su controlador, modelos y vistas y agrega una entrada como:
 
-Un índice único en `model_has_roles` impide múltiples roles por usuario. La migración de actualización normaliza asignaciones existentes, conserva Administrador primero, luego Empleado, Cliente y finalmente un rol personalizado; si no había rol, asigna Cliente. Retira permisos individuales anteriores y sincroniza los roles predefinidos. No cambia contraseñas ni borra cuentas, catálogos o historial. La normalización de permisos no se revierte al deshacer la migración.
+```php
+'reportes' => [
+    'nombre' => 'Reportes',
+    'ruta' => 'reportes.index',
+    'controlador' => \App\Http\Controllers\ReporteController::class,
+    'acciones' => ['ver', 'crear', 'editar', 'eliminar'],
+],
+```
 
-Para actualizar otra instalación: `php artisan migrate` y `php artisan permission:cache-reset`. No hace falta volver a ejecutar seeders.
+La sección de catálogos de `routes/web.php` registra únicamente las rutas CRUD de las acciones declaradas: `ver` habilita listado y detalle; `crear`, formulario y guardado; `editar`, formulario y actualización; `eliminar`, borrado. El controlador debe implementar los métodos correspondientes (`index`, `show`, `create`, `store`, `edit`, `update`, `destroy`), usando `{record}` como parámetro de sus acciones con ID. El menú y las tarjetas del panel leen el mismo catálogo y muestran el enlace si el usuario tiene `modulo.ver`.
 
-Un rol personalizado con `usuarios.crear` puede crear cuentas Cliente. Con `usuarios.editar`/`usuarios.eliminar` puede gestionar cuentas Cliente y sus propios datos (la eliminación propia sigue bloqueada en el CRUD). Solo el Administrador modifica cuentas de otros roles o asigna roles, para evitar escalamiento mediante cambios de correo o contraseña. No se permite eliminar roles personalizados mientras tengan usuarios: primero reasignar esas cuentas.
+Si un módulo no es CRUD, omite `controlador`, registra sus rutas manualmente y protégelas, por ejemplo:
+
+```php
+Route::get('/dashboard/reportes', [ReporteController::class, 'index'])
+    ->middleware(['auth', 'permission:reportes.ver'])
+    ->name('reportes.index');
+```
+
+Declara las acciones adicionales en el catálogo (`exportar`, por ejemplo) y usa `permission:reportes.exportar` en su ruta. Los nombres de módulo y acción admiten letras minúsculas, números y guion bajo. Debe existir la ruta de entrada antes de agregar el enlace al catálogo.
+
+Tras cambiar el catálogo, ejecuta:
+
+```bash
+php artisan config:clear
+php artisan route:clear
+php artisan permisos:sincronizar
+```
+
+También puedes pulsar **Sincronizar permisos** en la pantalla de rutas. La operación es repetible: crea los permisos faltantes, conserva los existentes y no sobrescribe los permisos de Empleado, Cliente ni roles personalizados. Las nuevas acciones quedan disponibles en el formulario de roles. Los permisos antiguos no se eliminan automáticamente: se conservan sus asignaciones para que revises los cambios del proyecto.
+
+Administrador conserva acceso a todos los permisos del catálogo y al mantenimiento de usuarios y roles; no puede renombrarse, eliminarse ni editarse desde la interfaz. Empleado y Cliente mantienen sus nombres y no pueden eliminarse, pero el Administrador puede modificar sus permisos. `config/roles.php` define los permisos iniciales de una instalación nueva, no reemplaza las asignaciones guardadas de estos roles durante la sincronización.
+
+Cada usuario sigue teniendo un único rol; los permisos individuales no conceden acceso. Solo el Administrador crea roles y asigna el rol a una cuenta. El registro público asigna Cliente, por lo que los cambios de ese rol afectan también a las cuentas nuevas registradas.
+
+Los roles delegados con permisos de usuarios pueden gestionar cuentas Cliente solo si estas no tienen accesos superiores a los suyos. Tampoco pueden crear una cuenta Cliente con accesos superiores a los propios. Así no pueden ampliar sus privilegios cambiando contraseñas o creando cuentas. Las cuentas de otros roles siguen protegidas y solo Administrador cambia sus asignaciones.
+
+No se necesita una migración nueva para este catálogo: en una instalación actualizada basta sincronizar los permisos. La restricción de un rol por usuario sigue protegida por el índice de la migración anterior.

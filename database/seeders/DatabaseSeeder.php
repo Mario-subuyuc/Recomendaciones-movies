@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Services\CatalogoPermisos;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
         */
 
         app(PermissionRegistrar::class)->forgetCachedPermissions();
+        app(CatalogoPermisos::class)->sincronizar();
         Permission::where('guard_name', 'web')->where(function ($query) {
             $query->where('name', 'like', 'productos.%')->orWhere('name', 'like', 'ventas.%');
         })->delete();
@@ -75,9 +77,7 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        $admin->syncPermissions(
-            config('roles.predefinidos.Administrador')
-        );
+        $admin->givePermissionTo(app(CatalogoPermisos::class)->nombres());
 
         /*
         |--------------------------------------------------------------------------
@@ -85,15 +85,17 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        $empleado->syncPermissions([
-            'peliculas.ver',
-            'peliculas.crear',
-            'peliculas.editar',
+        if ($empleado->wasRecentlyCreated) {
+            $empleado->syncPermissions([
+                'peliculas.ver',
+                'peliculas.crear',
+                'peliculas.editar',
 
-            'videojuegos.ver',
-            'videojuegos.crear',
-            'videojuegos.editar',
-        ]);
+                'videojuegos.ver',
+                'videojuegos.crear',
+                'videojuegos.editar',
+            ]);
+        }
 
         /*
         |--------------------------------------------------------------------------
@@ -101,10 +103,12 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
-        $cliente->syncPermissions([
-            'peliculas.ver',
-            'videojuegos.ver',
-        ]);
+        if ($cliente->wasRecentlyCreated) {
+            $cliente->syncPermissions([
+                'peliculas.ver',
+                'videojuegos.ver',
+            ]);
+        }
 
         /*
         |--------------------------------------------------------------------------

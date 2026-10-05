@@ -24,7 +24,7 @@ class RolController extends Controller
 
     public function edit(Role $role)
     {
-        $this->personalizado($role);
+        $this->editable($role);
 
         return $this->form($role);
     }
@@ -42,7 +42,7 @@ class RolController extends Controller
 
     public function update(Request $request, Role $role)
     {
-        $this->personalizado($role);
+        $this->editable($role);
         $data = $this->validar($request, $role);
         DB::transaction(function () use ($role, $data) {
             $role->update(['name' => $data['name']]);
@@ -72,15 +72,24 @@ class RolController extends Controller
         abort_if($role->guard_name !== 'web' || array_key_exists($role->name, config('roles.predefinidos')), 403);
     }
 
+    private function editable(Role $role): void
+    {
+        abort_if($role->guard_name !== 'web' || $role->name === 'Administrador', 403);
+    }
+
     private function validar(Request $request, ?Role $role = null): array
     {
         $request->merge(['name' => is_string($request->input('name')) ? trim($request->input('name')) : $request->input('name')]);
-        if (is_string($request->input('name')) && in_array(mb_strtolower($request->input('name')), array_map('mb_strtolower', array_keys(config('roles.predefinidos'))), true)) {
+        $predefinido = $role && array_key_exists($role->name, config('roles.predefinidos'));
+        if ($predefinido && $request->input('name') !== $role->name) {
+            throw ValidationException::withMessages(['name' => 'El nombre de este rol predefinido se conserva.']);
+        }
+        if (! $predefinido && is_string($request->input('name')) && in_array(mb_strtolower($request->input('name')), array_map('mb_strtolower', array_keys(config('roles.predefinidos'))), true)) {
             throw ValidationException::withMessages(['name' => 'Este nombre está reservado para un rol predefinido.']);
         }
 
         return $request->validate([
-            'name' => ['required', 'string', 'max:100', Rule::notIn(array_keys(config('roles.predefinidos'))), Rule::unique('roles', 'name')->where('guard_name', 'web')->ignore($role)],
+            'name' => ['required', 'string', 'max:100', Rule::unique('roles', 'name')->where('guard_name', 'web')->ignore($role)],
             'permissions' => ['sometimes', 'array'],
             'permissions.*' => ['string', 'distinct', Rule::exists('permissions', 'name')->where('guard_name', 'web')],
         ]);

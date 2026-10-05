@@ -14,10 +14,11 @@
                     <li class="sidebar-item {{ request()->routeIs($ruta) || ($ruta === 'chat.historial' && request()->routeIs('chat.detalle')) ? 'active' : '' }}"><a class="sidebar-link" href="{{ route($ruta) }}"><span>{{ $etiqueta }}</span></a></li>
                 @endforeach
             @endif
-                @foreach(['peliculas' => 'Películas', 'videojuegos' => 'Videojuegos'] as $module => $label)
+                @foreach(collect(config('modulos'))->except('usuarios') as $module => $definition)
+                @php($label = $definition['nombre'])
                 @can($module.'.ver')
                 <li class="sidebar-item {{ request()->routeIs($module.'.*') ? 'active' : '' }}">
-                    <a class="sidebar-link" href="{{ route($module.'.index') }}"><span>{{ $label }}</span></a>
+                    <a class="sidebar-link" href="{{ route($definition['ruta']) }}"><span>{{ $label }}</span></a>
                 </li>
                 @endcan
                 @endforeach
@@ -28,7 +29,7 @@
                         <ul class="dashboard-submenu">
                             @can('usuarios.ver')<li><a class="{{ request()->routeIs('admin.usuarios.index', 'admin.usuarios.edit') ? 'active' : '' }}" href="{{ route('admin.usuarios.index') }}">Usuarios</a></li>@endcan
                             @can('usuarios.crear')<li><a class="{{ request()->routeIs('admin.usuarios.create') ? 'active' : '' }}" href="{{ route('admin.usuarios.create') }}">Crear usuario</a></li>@endcan
-                            @role('Administrador')<li><a href="{{ route('admin.roles.index') }}">Roles y permisos</a></li>@endrole
+                            @role('Administrador')<li><a href="{{ route('admin.roles.index') }}">Roles y permisos</a></li><li><a href="{{ route('admin.permisos.index') }}">Rutas del proyecto</a></li>@endrole
                         </ul>
                     </details>
                 </li>

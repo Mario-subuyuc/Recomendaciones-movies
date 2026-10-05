@@ -3,7 +3,9 @@
 namespace Tests\Feature\Admin;
 
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
@@ -49,12 +51,17 @@ class RolesTest extends TestCase
         $client = $this->cliente();
         $client->givePermissionTo('usuarios.ver');
         $role = Role::findByName('Cliente');
-        $role->givePermissionTo('usuarios.ver');
         $this->actingAs($client)->get('/dashboard/usuarios')->assertForbidden();
         $this->actingAs($this->admin());
         $this->post('/dashboard/roles', ['name' => 'administrador', 'permissions' => ['usuarios.ver']])->assertSessionHasErrors('name');
-        $this->get('/dashboard/roles/'.$role->id.'/edit')->assertForbidden();
-        $this->put('/dashboard/roles/'.$role->id, ['name' => 'Otro', 'permissions' => ['usuarios.ver']])->assertForbidden();
+        $this->get('/dashboard/roles/'.$role->id.'/edit')->assertOk();
+        $this->put('/dashboard/roles/'.$role->id, ['name' => 'Otro', 'permissions' => ['usuarios.ver']])->assertSessionHasErrors('name');
+        $this->put('/dashboard/roles/'.$role->id, ['name' => 'Cliente', 'permissions' => ['usuarios.ver']])->assertSessionHasNoErrors();
+        $this->actingAs($client->fresh())->get('/dashboard/usuarios')->assertOk();
+        $this->get('/dashboard/peliculas')->assertForbidden();
+        $this->actingAs($this->admin());
+        $adminRole = Role::findByName('Administrador');
+        $this->get('/dashboard/roles/'.$adminRole->id.'/edit')->assertForbidden();
         $this->delete('/dashboard/roles/'.$role->id)->assertForbidden();
         $this->put('/dashboard/usuarios/'.$client->id, ['name' => $client->name, 'email' => $client->email, 'roles' => ['Cliente', 'Empleado']])->assertSessionHasErrors('roles');
         $this->put('/dashboard/usuarios/'.$client->id, ['name' => $client->name, 'email' => $client->email, 'roles' => ['Cliente'], 'permissions' => ['usuarios.ver']])->assertSessionHasErrors('permissions');
@@ -64,8 +71,8 @@ class RolesTest extends TestCase
     {
         $user = $this->cliente();
         $role = Role::findByName('Empleado');
-        $this->expectException(\Illuminate\Database\QueryException::class);
-        \Illuminate\Support\Facades\DB::table('model_has_roles')->insert(['role_id' => $role->id, 'model_type' => User::class, 'model_id' => $user->id]);
+        $this->expectException(QueryException::class);
+        DB::table('model_has_roles')->insert(['role_id' => $role->id, 'model_type' => User::class, 'model_id' => $user->id]);
     }
 
     public function test_custom_roles_can_be_updated_but_assigned_roles_cannot_be_deleted(): void
@@ -90,7 +97,7 @@ class RolesTest extends TestCase
     public function test_user_editor_cannot_escalate_privileges_or_modify_an_administrator(): void
     {
         $role = Role::create(['name' => 'Gestor limitado', 'guard_name' => 'web']);
-        $role->syncPermissions(['usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar']);
+        $role->syncPermissions(['usuarios.ver', 'usuarios.crear', 'usuarios.editar', 'usuarios.eliminar', 'peliculas.ver', 'videojuegos.ver']);
         $actor = User::factory()->create();
         $actor->syncRoles($role);
         $this->actingAs($actor);
