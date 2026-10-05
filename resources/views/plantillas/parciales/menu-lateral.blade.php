@@ -8,6 +8,12 @@
             <ul class="menu">
                 <li class="sidebar-title">Principal</li>
                 <li class="sidebar-item {{ request()->routeIs('dashboard') ? 'active' : '' }}"><a class="sidebar-link" href="{{ route('dashboard') }}"><span>Dashboard</span></a></li>
+            @if(auth()->user()->can('peliculas.ver') || auth()->user()->can('videojuegos.ver'))
+                <li class="sidebar-title">Asistente IA</li>
+                @foreach(['chat.index' => 'Chat del catálogo', 'chat.historial' => 'Mi historial', 'chat.consumo' => 'Mi consumo'] as $ruta => $etiqueta)
+                    <li class="sidebar-item {{ request()->routeIs($ruta) || ($ruta === 'chat.historial' && request()->routeIs('chat.detalle')) ? 'active' : '' }}"><a class="sidebar-link" href="{{ route($ruta) }}"><span>{{ $etiqueta }}</span></a></li>
+                @endforeach
+            @endif
                 @foreach(['peliculas' => 'Películas', 'videojuegos' => 'Videojuegos'] as $module => $label)
                 @can($module.'.ver')
                 <li class="sidebar-item {{ request()->routeIs($module.'.*') ? 'active' : '' }}">

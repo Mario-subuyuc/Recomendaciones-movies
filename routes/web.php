@@ -1,17 +1,20 @@
 <?php
 
 use App\Http\Controllers\Admin\UsuarioController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PeliculaController;
 use App\Http\Controllers\PerfilController;
 use App\Http\Controllers\VideojuegoController;
+use App\Services\ResumenConsumo;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('bienvenida');
 });
 
-Route::get('/dashboard', function () {
-    return view('panel');
+Route::get('/dashboard', function (Request $request, ResumenConsumo $resumen) {
+    return view('panel', ['consumo' => $resumen->paraUsuario($request->user()->id)]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -21,6 +24,14 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+Route::prefix('dashboard')->middleware(['auth', 'permission:peliculas.ver|videojuegos.ver'])->group(function () {
+    Route::get('chat', [ChatController::class, 'index'])->name('chat.index');
+    Route::post('chat', [ChatController::class, 'preguntar'])->middleware('throttle:chat')->name('chat.preguntar');
+    Route::get('historial', [ChatController::class, 'historial'])->name('chat.historial');
+    Route::get('historial/{conversacion}', [ChatController::class, 'detalle'])->name('chat.detalle');
+    Route::get('consumo', [ChatController::class, 'consumo'])->name('chat.consumo');
+});
 
 Route::prefix('dashboard')->middleware('auth')->group(function () {
     foreach (['peliculas' => PeliculaController::class, 'videojuegos' => VideojuegoController::class] as $module => $controller) {

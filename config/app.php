@@ -12,6 +12,9 @@ return [
 
     'timezone' => 'UTC',
 
+    // Guardar fechas en UTC y mostrarlas en la hora local de Guatemala.
+    'display_timezone' => 'America/Guatemala',
+
     'locale' => env('APP_LOCALE', 'en'),
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),

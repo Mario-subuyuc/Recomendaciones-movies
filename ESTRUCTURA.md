@@ -1,5 +1,26 @@
 # Guía del proyecto
 
+## Chatbot y consumo de IA
+
+| Parte | Ubicación |
+| --- | --- |
+| Conexión con Groq, endpoint y modelo | `config/services.php` y `app/Services/GroqService.php` |
+| Validación de filtros y búsqueda del catálogo | `app/Services/ConsultaCatalogo.php` |
+| Orquestación de las dos llamadas e historial | `app/Services/ChatCatalogo.php` |
+| Contador central de palabras | `app/Services/ContadorPalabras.php` |
+| Totales personales | `app/Services/ResumenConsumo.php` |
+| Controlador del chat e historial | `app/Http/Controllers/ChatController.php` |
+| Validación de la pregunta | `app/Http/Requests/PreguntarChatRequest.php` |
+| Modelos de conversación, mensajes y consumo | `app/Models/Conversacion.php`, `Mensaje.php`, `ConsumoToken.php` |
+| Pantallas del chat | `resources/views/chat/` |
+| Envío seguro de preguntas | `resources/js/chat.js` |
+| Gráfica de barras con Chart.js | `resources/js/consumo.js` |
+| Nuevas tablas | `database/migrations/2026_10_06_000001_create_chat_tables.php` |
+| SQL de referencia MySQL/MariaDB | `database/sql/chatbot.sql` |
+| Configuración y demostración | `README.md` y `DEMOSTRACION.md` |
+
+Los espacios de tokens del panel ahora muestran consumo real registrado por la aplicación. No hay cuota configurada ni saldo restante calculado.
+
 ## Dónde editar cada parte
 
 | Parte | Archivo o carpeta |

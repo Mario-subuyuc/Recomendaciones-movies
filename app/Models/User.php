@@ -3,15 +3,15 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasRoles, HasFactory, Notifiable;
+    use HasFactory, HasRoles, Notifiable;
 
     protected $fillable = [
         'name',
@@ -23,6 +23,16 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    public function conversaciones(): HasMany
+    {
+        return $this->hasMany(Conversacion::class, 'id_usuario');
+    }
+
+    public function consumos(): HasMany
+    {
+        return $this->hasMany(ConsumoToken::class, 'id_usuario');
+    }
 
     protected function casts(): array
     {
