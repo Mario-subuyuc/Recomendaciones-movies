@@ -50,13 +50,13 @@ class UserManagementTest extends TestCase
         $this->get('/dashboard')->assertOk()->assertSee('Administrar usuarios');
         $this->get('/dashboard/usuarios')->assertOk();
         $this->get('/dashboard/usuarios/create')->assertOk();
-        $data = ['name' => 'Nuevo', 'email' => 'nuevo@example.com', 'password' => 'password123', 'password_confirmation' => 'password123', 'roles' => ['Cliente'], 'permissions' => ['productos.editar']];
+        $data = ['name' => 'Nuevo', 'email' => 'nuevo@example.com', 'password' => 'password123', 'password_confirmation' => 'password123', 'roles' => ['Cliente'], 'permissions' => ['peliculas.editar']];
         $this->post('/dashboard/usuarios', $data)->assertSessionHasNoErrors()->assertRedirect('/dashboard/usuarios');
         $user = User::where('email', $data['email'])->firstOrFail();
         $this->assertTrue(Hash::check('password123', $user->password));
         $this->assertTrue($user->hasRole('Cliente'));
-        $this->assertTrue($user->hasDirectPermission('productos.editar'));
-        $this->assertTrue($user->hasPermissionTo('productos.ver'));
+        $this->assertTrue($user->hasDirectPermission('peliculas.editar'));
+        $this->assertTrue($user->hasPermissionTo('peliculas.ver'));
         $this->get("/dashboard/usuarios/{$user->id}/edit")->assertOk();
         $this->put("/dashboard/usuarios/{$user->id}", ['name' => 'Editado', 'email' => $user->email, 'roles' => ['Empleado'], 'password' => ''])->assertSessionHasNoErrors();
         $user->refresh()->unsetRelation('roles')->unsetRelation('permissions');

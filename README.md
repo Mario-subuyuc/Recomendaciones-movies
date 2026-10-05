@@ -9,6 +9,22 @@
 
 ## Administración de usuarios
 
+### Catálogos de películas y videojuegos
+
+Ejecutar `php artisan migrate:fresh --seed` para reconstruir la base de datos con las nuevas tablas y 12 registros ficticios por catálogo (el comando elimina los datos existentes). Para conservar los datos, usar `php artisan migrate` y luego `php artisan db:seed`; el seeder actualiza las cuentas de demostración y reemplaza los permisos antiguos de productos/ventas.
+
+Rutas: `/dashboard/peliculas` y `/dashboard/videojuegos`. En ambos módulos: `GET /create` muestra el formulario, `POST` crea un registro, `GET /{id}` muestra todos sus datos, `GET /{id}/edit` abre la edición, `PUT/PATCH /{id}` actualiza y `DELETE /{id}` elimina. Los IDs son `id_pelicula` e `id_videojuego`. Todos los campos solicitados están incluidos; `fecha_registro` es una fecha editable, la calificación va de 0 a 10 (un decimal) y `jugadores` representa una cantidad positiva.
+
+Administrador tiene todos los permisos. Empleado puede ver, crear y editar ambos catálogos. Cliente puede ver ambos. Los permisos individuales asignados desde Usuarios se suman a los del rol; se validan en cada ruta y los botones se muestran según el acceso. Los permisos se llaman `peliculas.ver/crear/editar/eliminar` y `videojuegos.ver/crear/editar/eliminar`.
+
+Los modelos son `Pelicula` y `Videojuego`, cada módulo tiene su controlador, y comparten `CatalogController`, `SaveCatalogRequest` y las vistas de `resources/views/catalog` para reducir duplicación. Los datos ficticios están en `database/seeders/CatalogSeeder.php`.
+
+### Interfaz Mazer
+
+El dashboard y el CRUD usan Mazer (Bootstrap 5), con un menú lateral adaptable y un botón para alternar modo claro/oscuro. La preferencia se guarda en `localStorage`; la primera visita respeta el tema del sistema. Los estilos de Mazer se cargan desde el CDN oficial indicado por el proyecto y requieren conexión a Internet. El perfil también usa Mazer, incluidos sus formularios y la confirmación de eliminación. Las pantallas de autenticación conservan Breeze. El menú lateral funciona como acordeón: al abrir una sección se cierran las otras, y la sección de la ruta actual comienza abierta.
+
+Para agregar módulos, usar `<x-dashboard-layout>` con un slot `header` y el contenido de la página. Este componente centraliza el tema, la navegación y los mensajes de éxito y validación. El menú está en `resources/views/layouts/partials/dashboard-sidebar.blade.php`; los campos reutilizables están en `<x-dashboard-input>`. No mezclar clases Tailwind con este layout: usar clases Bootstrap. Hay slots de extensión `@stack('styles')` y `@stack('scripts')`.
+
 Preparar la base de datos local:
 
 ```bash

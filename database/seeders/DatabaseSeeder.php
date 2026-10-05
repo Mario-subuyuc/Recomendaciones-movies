@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,21 +19,26 @@ class DatabaseSeeder extends Seeder
         |--------------------------------------------------------------------------
         */
 
+        app(PermissionRegistrar::class)->forgetCachedPermissions();
+        Permission::where('guard_name', 'web')->where(function ($query) {
+            $query->where('name', 'like', 'productos.%')->orWhere('name', 'like', 'ventas.%');
+        })->delete();
+
         $permissions = [
             'usuarios.ver',
             'usuarios.crear',
             'usuarios.editar',
             'usuarios.eliminar',
 
-            'productos.ver',
-            'productos.crear',
-            'productos.editar',
-            'productos.eliminar',
+            'peliculas.ver',
+            'peliculas.crear',
+            'peliculas.editar',
+            'peliculas.eliminar',
 
-            'ventas.ver',
-            'ventas.crear',
-            'ventas.editar',
-            'ventas.eliminar',
+            'videojuegos.ver',
+            'videojuegos.crear',
+            'videojuegos.editar',
+            'videojuegos.eliminar',
         ];
 
         foreach ($permissions as $permission) {
@@ -80,13 +86,13 @@ class DatabaseSeeder extends Seeder
         */
 
         $empleado->syncPermissions([
-            'productos.ver',
-            'productos.crear',
-            'productos.editar',
+            'peliculas.ver',
+            'peliculas.crear',
+            'peliculas.editar',
 
-            'ventas.ver',
-            'ventas.crear',
-            'ventas.editar',
+            'videojuegos.ver',
+            'videojuegos.crear',
+            'videojuegos.editar',
         ]);
 
         /*
@@ -96,8 +102,8 @@ class DatabaseSeeder extends Seeder
         */
 
         $cliente->syncPermissions([
-            'productos.ver',
-            'ventas.crear',
+            'peliculas.ver',
+            'videojuegos.ver',
         ]);
 
         /*
@@ -125,6 +131,8 @@ class DatabaseSeeder extends Seeder
         $user->syncRoles([
             'Administrador',
         ]);
+
+        $this->call(CatalogSeeder::class);
 
         foreach ([
             ['name' => 'laureano', 'email' => 'msubuyuct@miumg.edu.gt', 'role' => 'Empleado'],
