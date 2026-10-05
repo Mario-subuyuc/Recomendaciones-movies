@@ -10,6 +10,7 @@ use App\Services\ContadorPalabras;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Spatie\Permission\Models\Role;
 use Tests\TestCase;
 
 class ChatTest extends TestCase
@@ -31,12 +32,35 @@ class ChatTest extends TestCase
 
     private function salida(string $content): array
     {
-        return ['choices' => [['message' => ['content' => $content], 'finish_reason' => 'stop']]];
+        return ['choices' => [['message' => ['content' => $content], 'finish_reason' => 'stop']], 'usage' => ['prompt_tokens' => 123, 'completion_tokens' => 45, 'total_tokens' => 168]];
     }
 
     private function filtros(string $categoria = 'videojuegos', array $filtros = [], int $cantidad = 3): string
     {
         return json_encode(['categoria' => $categoria, 'estado' => 'consulta', 'cantidad' => $cantidad, 'filtros' => $filtros]);
+    }
+
+    public function test_missing_or_invalid_provider_usage_is_unknown_and_never_estimated(): void
+    {
+        $first = $this->salida($this->filtros());
+        unset($first['usage']);
+        $second = $this->salida('Resultados del catálogo.');
+        $second['usage']['total_tokens'] = 999;
+        Http::fakeSequence()->push($first)->push($second);
+        $this->actingAs($this->usuario())->postJson('/dashboard/chat', ['categoria' => 'videojuegos', 'pregunta' => 'Dame videojuegos'])->assertOk();
+        $this->assertSame(2, ConsumoToken::count());
+        $this->assertSame(2, ConsumoToken::whereNull('tokens_reales')->count());
+        $this->assertGreaterThan(0, ConsumoToken::sum('tokens'));
+        $this->get('/dashboard/consumo')->assertViewHas('consumo', ['peliculas' => 0, 'videojuegos' => 0]);
+    }
+
+    public function test_real_usage_survives_invalid_response_content(): void
+    {
+        $response = $this->salida('');
+        Http::fakeSequence()->push($response);
+        $this->actingAs($this->usuario())->postJson('/dashboard/chat', ['categoria' => 'peliculas', 'pregunta' => 'Dame películas'])->assertStatus(503);
+        $this->assertSame(168, ConsumoToken::firstOrFail()->tokens_reales);
+        $this->assertSame(0, Conversacion::count());
     }
 
     public function test_chat_routes_require_authentication_and_catalog_permission(): void
@@ -71,6 +95,9 @@ class ChatTest extends TestCase
             $input = implode("\n", array_column($calls[$index][0]['messages'], 'content'));
             $usage = ConsumoToken::orderBy('id_consumo')->skip($index)->firstOrFail();
             $this->assertSame($contador->contar($input) + $contador->contar($output), $usage->tokens);
+            $this->assertSame(123, $usage->tokens_reales_entrada);
+            $this->assertSame(45, $usage->tokens_reales_salida);
+            $this->assertSame(168, $usage->tokens_reales);
             $this->assertSame('videojuegos', $usage->categoria);
             $this->assertSame($conversation->getKey(), $usage->id_conversacion);
         }
@@ -165,7 +192,7 @@ class ChatTest extends TestCase
     {
         Http::fake();
         $user = User::factory()->create();
-        $role = \Spatie\Permission\Models\Role::create(['name' => 'Consulta películas', 'guard_name' => 'web']);
+        $role = Role::create(['name' => 'Consulta películas', 'guard_name' => 'web']);
         $role->givePermissionTo('peliculas.ver');
         $user->syncRoles($role);
         $this->actingAs($user)->postJson('/dashboard/chat', ['categoria' => 'videojuegos', 'pregunta' => 'Dame videojuegos'])->assertForbidden();

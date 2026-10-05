@@ -34,7 +34,7 @@ Los espacios de tokens del panel ahora muestran consumo real registrado por la a
 | Menú lateral | `resources/views/plantillas/parciales/menu-lateral.blade.php` |
 | Nombre, correo y roles de la barra superior | `resources/views/plantillas/parciales/usuario-barra-superior.blade.php` |
 | Pie de página | `resources/views/plantillas/parciales/pie-pagina.blade.php` |
-| Resumen de consumo y gráfica de tokens académicos | `resources/views/panel/parciales/resumen-tokens.blade.php` |
+| Resumen y gráfica de tokens reales reportados por Groq | `resources/views/panel/parciales/resumen-tokens.blade.php` |
 | Formularios de acceso y recuperación de contraseña | `resources/views/autenticacion/` |
 | Perfil y sus formularios | `resources/views/perfil/` |
 | Listado y formulario de usuarios | `resources/views/administracion/usuarios/` |

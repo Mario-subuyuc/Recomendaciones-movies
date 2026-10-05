@@ -13,11 +13,11 @@ class ConsumoToken extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['id_usuario', 'id_conversacion', 'consulta_uuid', 'categoria', 'etapa', 'tokens_entrada', 'tokens_salida', 'tokens', 'fecha'];
+    protected $fillable = ['id_usuario', 'id_conversacion', 'consulta_uuid', 'categoria', 'etapa', 'tokens_entrada', 'tokens_salida', 'tokens', 'tokens_reales_entrada', 'tokens_reales_salida', 'tokens_reales', 'fecha'];
 
     protected function casts(): array
     {
-        return ['fecha' => 'datetime', 'tokens' => 'integer'];
+        return ['fecha' => 'datetime', 'tokens' => 'integer', 'tokens_reales_entrada' => 'integer', 'tokens_reales_salida' => 'integer', 'tokens_reales' => 'integer'];
     }
 
     public function usuario(): BelongsTo

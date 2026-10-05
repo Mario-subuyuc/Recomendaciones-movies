@@ -41,7 +41,24 @@ class GroqService
         if (! $response->successful()) {
             throw new ErrorChat('El servicio de IA no está disponible. Revisa la configuración del modelo o inténtalo más tarde.');
         }
+        $real = $response->json('usage');
+        $realValido = is_array($real)
+            && is_int($real['prompt_tokens'] ?? null) && $real['prompt_tokens'] >= 0
+            && is_int($real['completion_tokens'] ?? null) && $real['completion_tokens'] >= 0
+            && is_int($real['total_tokens'] ?? null) && $real['total_tokens'] >= 0
+            && $real['total_tokens'] === $real['prompt_tokens'] + $real['completion_tokens'];
         $content = $response->json('choices.0.message.content');
+        $contentValido = is_string($content) && trim($content) !== '' && mb_check_encoding($content, 'UTF-8');
+        // Guardar el consumo reportado aunque el contenido de la respuesta sea inválido.
+        if (! $contentValido && $realValido) {
+            ConsumoToken::create([
+                'id_usuario' => $usuario, 'categoria' => $categoria, 'consulta_uuid' => $consulta,
+                'etapa' => $etapa, 'tokens_entrada' => $this->contador->contar($entrada), 'tokens_salida' => 0,
+                'tokens' => $this->contador->contar($entrada), 'fecha' => now(),
+                'tokens_reales_entrada' => $real['prompt_tokens'], 'tokens_reales_salida' => $real['completion_tokens'],
+                'tokens_reales' => $real['total_tokens'],
+            ]);
+        }
         if (! is_string($content) || trim($content) === '' || ! mb_check_encoding($content, 'UTF-8')) {
             throw new ErrorChat('El asistente devolvió una respuesta inválida. Inténtalo de nuevo.');
         }
@@ -52,6 +69,9 @@ class GroqService
             'id_usuario' => $usuario, 'categoria' => $categoria, 'consulta_uuid' => $consulta,
             'etapa' => $etapa, 'tokens_entrada' => $in, 'tokens_salida' => $out,
             'tokens' => $in + $out, 'fecha' => now(),
+            'tokens_reales_entrada' => $realValido ? $real['prompt_tokens'] : null,
+            'tokens_reales_salida' => $realValido ? $real['completion_tokens'] : null,
+            'tokens_reales' => $realValido ? $real['total_tokens'] : null,
         ]);
         if ($response->json('choices.0.finish_reason') !== 'stop' || mb_strlen($content) > 12000) {
             throw new ErrorChat('La respuesta quedó incompleta. Reduce la cantidad de resultados e inténtalo de nuevo.');

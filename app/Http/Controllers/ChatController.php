@@ -50,6 +50,6 @@ class ChatController extends Controller
 
     public function consumo(Request $request, ResumenConsumo $resumen): View
     {
-        return view('chat.consumo', ['consumo' => $resumen->paraUsuario($request->user()->id)]);
+        return view('chat.consumo', ['consumo' => $resumen->paraUsuario($request->user()->id), 'sinMedicion' => $resumen->llamadasSinMedicion($request->user()->id)]);
     }
 }

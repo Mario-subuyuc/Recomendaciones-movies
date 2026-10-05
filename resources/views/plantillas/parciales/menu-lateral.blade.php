@@ -1,7 +1,7 @@
 <aside id="sidebar">
     <div class="sidebar-wrapper">
         <div class="sidebar-header d-flex justify-content-between align-items-center">
-            <a class="brand" href="{{ route('dashboard') }}">{{ config('app.name') }}</a>
+            <a class="brand" href="{{ route('dashboard') }}">Proyecto IA</a>
             <button class="btn btn-sm btn-outline-secondary d-xl-none" type="button" aria-label="Cerrar menú" data-sidebar-close>✕</button>
         </div>
         <div class="sidebar-menu">

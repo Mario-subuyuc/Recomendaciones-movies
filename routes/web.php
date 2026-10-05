@@ -14,7 +14,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function (Request $request, ResumenConsumo $resumen) {
-    return view('panel', ['consumo' => $resumen->paraUsuario($request->user()->id)]);
+    return view('panel', ['consumo' => $resumen->paraUsuario($request->user()->id), 'sinMedicion' => $resumen->llamadasSinMedicion($request->user()->id)]);
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

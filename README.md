@@ -188,7 +188,11 @@ Las cadenas del contexto se limitan a 150 caracteres (títulos hasta 255), y la 
 
 El botón se desactiva durante el procesamiento. Se limita a 6 solicitudes por minuto por usuario y se usa un bloqueo de 75 segundos para impedir procesamiento concurrente del mismo usuario. Si hay un corte de conexión, consulta el historial antes de repetir: el servidor podría haber terminado aunque el navegador no recibiera la respuesta.
 
-## Tokens académicos
+## Tokens reales y conteo académico
+
+El Dashboard y Mi consumo muestran `usage.prompt_tokens`, `usage.completion_tokens` y `usage.total_tokens` reportados por Groq, sumando las llamadas de interpretación y respuesta. Se guardan por separado en `tokens_reales_entrada`, `tokens_reales_salida` y `tokens_reales`. Referencia: [API de Groq](https://console.groq.com/docs/api-reference).
+
+Las mediciones deben ser enteros no negativos y el total debe coincidir con entrada más salida. Cuando falta una medición válida, se guarda como desconocida (`NULL`), sin estimarla por palabras. Los registros anteriores no se pueden reconstruir y no se incluyen en la gráfica real; la vista indica cuántas llamadas carecen de medición. El consumo real válido se conserva aunque la respuesta esté vacía, truncada o su JSON sea inválido. No hay saldo ni cuota de cuenta calculados. Ejecuta `php artisan migrate` para incorporar las columnas en instalaciones existentes.
 
 Las horas del historial se muestran en `America/Guatemala` (UTC−6), definida en `config/app.php` como `display_timezone`. La aplicación conserva UTC para almacenar los timestamps y convierte la hora al presentarla; así los registros anteriores también se muestran correctamente. Las fechas de lanzamiento o registro del catálogo son fechas sin hora y no se convierten.
 
@@ -200,11 +204,11 @@ Cada llamada con contenido textual verificable registra:
 - Salida: contenido textual recibido de Groq, incluido el JSON de interpretación.
 - Total: suma de entrada y salida.
 
-No se cuentan nombres de roles, cabeceras, campos del protocolo HTTP ni tokens reales de `usage`. La pregunta se cuenta en cada llamada porque se procesa dos veces. No se cuenta dos veces una misma llamada: `consulta_uuid + etapa` es único. Los avisos locales de ausencia/cantidad no se envían al modelo y no añaden consumo.
+El conteo académico por palabras se conserva en los campos originales como medida separada y no alimenta la gráfica. La pregunta se cuenta en cada llamada porque se procesa dos veces. No se cuenta dos veces una misma llamada: `consulta_uuid + etapa` es único. Los avisos locales de ausencia/cantidad no se envían al modelo y no añaden consumo.
 
 Si la interpretación devuelve texto, pero su JSON es inválido o la respuesta posterior falla, su consumo permanece registrado sin conversación completada. Una salida truncada con texto verificable también conserva su consumo. Un timeout, un error HTTP o una respuesta sin texto verificable no inventan consumo.
 
-Las barras y totales incluyen esos consumos parciales, siempre limitados al usuario autenticado. No se ha definido una cuota académica, por lo que no se calcula un saldo restante ficticio. La gráfica usa [Chart.js con Vite](https://www.chartjs.org/docs/latest/getting-started/integration.html) y se adapta al tema del panel.
+Las barras y totales incluyen consumos reales confirmados, incluso de consultas que fallaron, siempre limitados al usuario autenticado. La gráfica usa [Chart.js con Vite](https://www.chartjs.org/docs/latest/getting-started/integration.html) y se adapta al tema del panel.
 
 ## Organización y entrega
 
